@@ -6,7 +6,7 @@ export const getEntries = () => async (dispatch) => {
         const { data } = await api.fetchEntries();
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 };
 
@@ -15,6 +15,6 @@ export const createEntry = (newEntry) => async (dispatch) => {
         const { data } = await api.createEntry(newEntry);
         dispatch({ type: 'CREATE', payload: data });
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 };
