@@ -53,7 +53,6 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getEntries());
-        console.log('wtf')
     }, [currentId, dispatch]);
 
     return (
