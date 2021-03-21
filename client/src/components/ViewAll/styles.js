@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-
 export default makeStyles(() => ({
-  root: {
-    padding: 0
-  },
+    main: {
+        marginTop: 10,
+        padding: 0
+    }
 }));
+

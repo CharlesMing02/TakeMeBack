@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Container, AppBar, Typography, Grow, Grid, createMuiTheme, ThemeProvider } from '@material-ui/core'; //Ui library for React
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { Container, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import { getEntries } from './actions/entries'
-import Entries from './components/Entries/Entries';
-import Form from './components/Form/Form';
+import Navbar from './components/Navbar/Navbar';
+import ViewAll from './components/ViewAll/ViewAll';
+import Auth from './components/Auth/Auth';
+
 import useStyles from './styles';
 
 const theme = createMuiTheme({
@@ -48,33 +49,20 @@ const theme = createMuiTheme({
 
 const App = () => {
     const classes = useStyles();
-    const [currentId, setCurrentId] = useState(null);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getEntries());
-    }, [currentId, dispatch]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container>
-                <AppBar className={classes.appBar} position="static" color="inherit"> 
-                    <Typography variant="h2" align="center">Take Me Back</Typography>
-                </AppBar>
-                <Grow in>
-                    <Container>
-                        <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-                            <Grid item xs={12} sm={8}>
-                                <Entries setCurrentId={setCurrentId}/>
-                            </Grid>
-                            <Grid item xs={12} sm={4}>
-                                <Form currentId={currentId} setCurrentId={setCurrentId}/>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </Grow>
-            </Container>
-        </ThemeProvider>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
+                <Container class={classes.root}>
+                    <Navbar/>
+                    <Switch>
+                        <Route path="/" exact component={ViewAll}/>
+                        <Route path="/auth" exact component={Auth}/>
+                    </Switch>
+                </Container>
+            </ThemeProvider>
+        </BrowserRouter>
+        
     )
 }
 
