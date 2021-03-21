@@ -35,3 +35,15 @@ export const updateEntry = async (req, res) => {
     const updatedEntry = await EntryMessage.findByIdAndUpdate(_id, { ...entry, _id }, { new: true });
     res.json(updatedEntry);
 }
+
+export const updateAskedCount = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('Invalid entry id');
+    }
+
+    const entry = await EntryMessage.findById(id);
+    const updatedEntry = await EntryMessage.findByIdAndUpdate(id, { askedCount: entry.askedCount +1 }, {new: true});
+    res.json(updatedEntry)
+}
