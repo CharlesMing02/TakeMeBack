@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 
 import useStyles from './styles';
 
-const Entry = ({ entry }) => {
+const Entry = ({ entry, setCurrentId }) => {
     const classes = useStyles();
 
     return (
@@ -18,6 +19,12 @@ const Entry = ({ entry }) => {
                     {entry.description}
                 </Typography>
             </CardContent>
+            <Grid container justify="flex-end">
+                <Button color="primary" onClick={() => setCurrentId(entry._id)}>
+                    <EditIcon/>
+                </Button>
+            </Grid>
+            
         </Card>
 
     );

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import EntryMessage from '../models/entryMessage.js';
 
 export const getEntries = async (req, res) => {
@@ -22,3 +23,15 @@ export const createEntry = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 };
+
+export const updateEntry = async (req, res) => {
+    const { id: _id } = req.params; //renames to _id to fit backend schema
+    const entry = req.body
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('Invalid entry id');
+    }
+
+    const updatedEntry = await EntryMessage.findByIdAndUpdate(_id, { ...entry, _id }, { new: true });
+    res.json(updatedEntry);
+}

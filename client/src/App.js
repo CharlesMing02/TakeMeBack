@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, AppBar, Typography, Grow, Grid, createMuiTheme, ThemeProvider } from '@material-ui/core'; //Ui library for React
 import { useDispatch } from 'react-redux';
 
@@ -48,11 +48,13 @@ const theme = createMuiTheme({
 
 const App = () => {
     const classes = useStyles();
+    const [currentId, setCurrentId] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getEntries());
-    }, [dispatch]);
+        console.log('wtf')
+    }, [currentId, dispatch]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -64,10 +66,10 @@ const App = () => {
                     <Container>
                         <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                             <Grid item xs={12} sm={8}>
-                                <Entries />
+                                <Entries setCurrentId={setCurrentId}/>
                             </Grid>
                             <Grid item xs={12} sm={4}>
-                                <Form />
+                                <Form currentId={currentId} setCurrentId={setCurrentId}/>
                             </Grid>
                         </Grid>
                     </Container>

@@ -1,34 +1,50 @@
-import React, { useState } from 'react'; //use react hooks rather than dealing with classes and 'this' bindings 
+import React, { useState, useEffect } from 'react'; //use react hooks rather than dealing with classes and 'this' bindings 
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
-import { createEntry } from '../../actions/entries';
+import { createEntry, updateEntry } from '../../actions/entries';
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
     const [entryData, setEntryData] = useState({ //array destructuring: first element is state object, second is setState function
         creator: '',
         highlights: '',
         description: '',
         selectedFile: ''
     });
+    const entry = useSelector((state) => currentId ? state.entries.find((entry) => entry._id === currentId) : null); //find current entry from redux store
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(entry) setEntryData(entry);
+    }, [entry])
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createEntry(entryData));
+        if(currentId) {
+            dispatch(updateEntry(currentId, entryData));
+        } else {
+            dispatch(createEntry(entryData));
+        }
+        
+        clear();
     }
 
     const clear = () => {
-
+        setCurrentId(null);
+        setEntryData({ creator: '',
+            highlights: '',
+            description: '',
+            selectedFile: '' 
+        });
     }
 
     return (
         <Paper className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">Daily Entry</Typography>
+                <Typography variant="h6">{currentId ? 'Editing Past Entry': 'Daily Entry'}</Typography>
                 <TextField name="creator" variant="outlined" label="Creator" fullWidth
                     value={entryData.creator}
                     onChange={(e) => setEntryData({ ...entryData, creator: e.target.value})}
@@ -36,8 +52,9 @@ const Form = () => {
                 <TextField name="highlights" variant="outlined" label="Highlights" fullWidth
                     value={entryData.highlights}
                     onChange={(e) => setEntryData({ ...entryData, highlights: e.target.value})}
+                    inputProps = {{ maxLength: 30 }}
                 />
-                <TextField name="description" variant="outlined" label="Describe your day" fullWidth
+                <TextField name="description" variant="outlined" label="Describe your day" fullWidth multiline
                     value={entryData.description}
                     onChange={(e) => setEntryData({ ...entryData, description: e.target.value})}
                 />

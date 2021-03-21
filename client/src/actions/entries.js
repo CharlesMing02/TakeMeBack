@@ -18,3 +18,13 @@ export const createEntry = (newEntry) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const updateEntry = (id, entry) => async (dispatch) => {
+    try {
+        const { data } = await api.updateEntry(id, entry);
+        console.log('from actions', data)
+        dispatch({ type: 'UPDATE', payload: data});
+    } catch (error) {
+        console.log(error);
+    }
+}
