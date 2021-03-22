@@ -58,7 +58,6 @@ const Entries = ({ setCurrentId }) => {
             <div className={classes.root}>
             <Tabs
                 orientation="vertical"
-                centered="true"
                 textColor="primary"
                 indicatorColor="primary"
                 variant="scrollable"

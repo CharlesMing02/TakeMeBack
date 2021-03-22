@@ -7,13 +7,14 @@ import AvatarMenu from '../AvatarMenu/AvatarMenu';
 
 const Navbar = () => {
     const classes = useStyles();
-    const user = {
-        result: {
-            streak: '1',
-            points: '1900',
-            name: 'Charles'
-        }
-    };
+    const user = null;
+    // {
+    //     result: {
+    //         streak: '1',
+    //         points: '1900',
+    //         name: 'Charles'
+    //     }
+    // };
 
     return (
         <div className={classes.root}>
@@ -22,9 +23,9 @@ const Navbar = () => {
                 <Toolbar className={classes.toolbar}>
                     {user ? (
                         <div className={classes.userOptions}>
-                            <Typography component={Link} to='/' variant="h7" className={classes.title}>View All</Typography>
-                            <Typography component={Link} to='/' variant="h7" className={classes.title}>Leaderboard</Typography>
-                            <Typography component={Link} to='/' variant="h7" className={classes.title}>Settings</Typography>
+                            <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>View All</Typography>
+                            <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Leaderboard</Typography>
+                            <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Settings</Typography>
                             <AvatarMenu user={user}/>
                         </div>
                         
