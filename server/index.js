@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import entryRoutes from './routes/entries.js';
+import userRoutes from './routes/users.js';
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(cors());
 
 // adds prefix of entries to all routes from that file
 app.use('/entries', entryRoutes);
+app.use('/user', userRoutes);
 
 
 const PORT = process.env.PORT || 5000;
