@@ -18,7 +18,7 @@ const ViewAll = () => {
 
     return (
         <Grow in>
-            <Container className={classes.main}>
+            <Container className={classes.main} maxWidth={false}>
                 <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Entries setCurrentId={setCurrentId}/>

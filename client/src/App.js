@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import ViewAll from './components/ViewAll/ViewAll';
 import Auth from './components/Auth/Auth';
+import Home from './components/Home/Home';
 
 import useStyles from './styles';
 
@@ -53,11 +54,12 @@ const App = () => {
     return (
         <BrowserRouter>
             <ThemeProvider theme={theme}>
-                <Container class={classes.root}>
+                <Container className={classes.root}>
                     <Navbar/>
                     <Switch>
-                        <Route path="/" exact component={ViewAll}/>
+                        <Route path="/view_all" exact component={ViewAll}/>
                         <Route path="/auth" exact component={Auth}/>
+                        <Route path="/" exact component={Home}/>
                     </Switch>
                 </Container>
             </ThemeProvider>
