@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { Button, Paper, Grid, Typography, Container } from '@material-ui/core';
+import { GoogleLogin } from 'react-google-login';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
+
 import useStyles from './styles';
 import Input from './Input';
+import Icon from './icon';
 
 const Auth = () => {
     const classes = useStyles();
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
@@ -22,6 +29,24 @@ const Auth = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
         setShowPassword(false);
     }
+
+    const googleSuccess = async (res) => {
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+
+        try {
+            dispatch({ type: 'AUTH', data: { result, token }});
+
+            history.push('/');
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    const googleFailure = async (error) => {
+        console.log(error);
+        console.log("Google Sign In unsuccessful.");
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -41,6 +66,17 @@ const Auth = () => {
                         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                             {isSignup ? 'Sign Up' : 'Sign In'}
                         </Button>
+                        <GoogleLogin
+                            clientId='304299194324-ktrfu2mdfkqjpov4rprmfkqu1laaoqdn.apps.googleusercontent.com' //after deploying, add url here: https://console.cloud.google.com/apis/credentials?project=takemeback-308402&supportedpurview=project
+                            render={(renderProps) => (
+                                <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon/>} variant="contained">
+                                    Sign in with Google
+                                </Button>
+                            )}
+                            onSuccess={googleSuccess}
+                            onFailure={googleFailure}
+                            cookiePolicy='single_host_origin'
+                        />
                         <Grid container justify="flex-end">
                             <Grid item>
                                 <Button onClick={toggleSignup}>

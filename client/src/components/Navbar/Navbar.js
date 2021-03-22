@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import useStyles from './styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 import AvatarMenu from '../AvatarMenu/AvatarMenu';
 
 const Navbar = () => {
     const classes = useStyles();
-    const user = null;
-    // {
-    //     result: {
-    //         streak: '1',
-    //         points: '1900',
-    //         name: 'Charles'
-    //     }
-    // };
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
+
+    const logout = () => {
+        dispatch({ type: 'LOGOUT' });
+
+        history.push('./');
+
+        setUser(null);
+    };
+
+    useEffect(() => {
+        const token = user?.token;
+
+        //check for JWT
+
+        setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
 
     return (
         <div className={classes.root}>
@@ -26,7 +39,7 @@ const Navbar = () => {
                             <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>View All</Typography>
                             <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Leaderboard</Typography>
                             <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Settings</Typography>
-                            <AvatarMenu user={user}/>
+                            <AvatarMenu user={user} logout={logout}/>
                         </div>
                         
                     ) : (

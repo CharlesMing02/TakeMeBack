@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Typography, Box, CircularProgress } from '@material-ui/core';
+import { Tabs, Tab, Box, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 

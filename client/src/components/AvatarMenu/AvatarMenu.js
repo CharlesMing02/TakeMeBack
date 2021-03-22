@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AvatarMenu({ user }) {
+export default function AvatarMenu({ user, logout }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -81,7 +81,7 @@ export default function AvatarMenu({ user }) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}><WhatshotIcon/>{user.result.streak}</MenuItem>
                     <MenuItem onClick={handleClose}><LocalActivityIcon/>{user.result.points}</MenuItem>
-                    <MenuItem onClick={handleClose}><Button variant="contained" className={classes.logout} color="secondary">Logout</Button></MenuItem>
+                    <MenuItem onClick={handleClose}><Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button></MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

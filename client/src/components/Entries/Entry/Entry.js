@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 
@@ -20,7 +20,7 @@ const Entry = ({ entry, setCurrentId }) => {
                 </Typography>
             </CardContent>
             <Grid container justify="flex-end">
-                <Button color="primary" onClick={() => setCurrentId(entry._id)}>
+                <Button color="primary" onClick={() => setCurrentId(entry._id)} variant="outlined">
                     <EditIcon/>
                 </Button>
             </Grid>
