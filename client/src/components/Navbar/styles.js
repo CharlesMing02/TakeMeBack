@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 //personalize later
 export default makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        //flexGrow: 1,
       },
     appBar: {
         backgroundColor: theme.palette.primary.dark,

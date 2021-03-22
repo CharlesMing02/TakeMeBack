@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Grow, Grid,  } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
+import HomeTab from './HomeTab/HomeTab';
 
 const Home = () => {
     const classes = useStyles();
@@ -12,16 +13,12 @@ const Home = () => {
     return (
         <Grow in>
             <Container className={classes.main} maxWidth={false}>
-                <Grid container>
-                    <Grid item xs={12}>
                         {userInfo.authData ? (
-                            <h1>HomeTab</h1>
+                            <HomeTab/>
                             
                         ) : (
                             <h1>Landing</h1>
                         )}
-                    </Grid>
-                </Grid>
             </Container>
         </Grow>
     )
