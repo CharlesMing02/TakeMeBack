@@ -6,5 +6,11 @@ export default makeStyles({
   },
   media: {
     height: 200
+  },
+  timesAsked: {
+    marginLeft: 16,
+    display: 'flex',
+    alignItems: 'center',
+    color: '#4169E1'
   }
 });

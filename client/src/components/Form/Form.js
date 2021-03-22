@@ -8,7 +8,6 @@ import { createEntry, updateEntry } from '../../actions/entries';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [entryData, setEntryData] = useState({ //array destructuring: first element is state object, second is setState function
-        creator: '',
         highlights: '',
         description: '',
         selectedFile: ''
@@ -16,6 +15,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const entry = useSelector((state) => currentId ? state.entries.find((entry) => entry._id === currentId) : null); //find current entry from redux store
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if(entry) setEntryData(entry);
@@ -34,7 +34,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         setCurrentId(null);
-        setEntryData({ creator: '',
+        setEntryData({
             highlights: '',
             description: '',
             selectedFile: '' 
@@ -45,10 +45,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <Paper className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{currentId ? 'Editing Past Entry': 'Daily Entry'}</Typography>
-                <TextField name="creator" variant="outlined" label="Creator" fullWidth
-                    value={entryData.creator}
-                    onChange={(e) => setEntryData({ ...entryData, creator: e.target.value})}
-                />
                 <TextField name="highlights" variant="outlined" label="Highlights" fullWidth
                     value={entryData.highlights}
                     onChange={(e) => setEntryData({ ...entryData, highlights: e.target.value})}

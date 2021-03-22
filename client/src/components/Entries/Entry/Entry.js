@@ -19,7 +19,10 @@ const Entry = ({ entry, setCurrentId }) => {
                     {entry.description}
                 </Typography>
             </CardContent>
-            <Grid container justify="flex-end">
+            <Grid container justify="space-between">
+                <Typography className={classes.timesAsked} variant="body2">
+                    {`Times asked: ${entry.askedCount}`}
+                </Typography>
                 <Button color="primary" onClick={() => setCurrentId(entry._id)} variant="outlined">
                     <EditIcon/>
                 </Button>

@@ -3,7 +3,9 @@ import EntryMessage from '../models/entryMessage.js';
 
 export const getEntries = async (req, res) => {
     try {
-        const entryMessages = await EntryMessage.find();
+        if(!req.userId) return res.json({ message: "Unauthenticated" });
+
+        const entryMessages = await EntryMessage.find({ creator: req.userId }).exec();
 
         res.status(200).json(entryMessages);
     } catch (error) {
@@ -13,7 +15,9 @@ export const getEntries = async (req, res) => {
 
 export const createEntry = async (req, res) => {
     const entry = req.body;
-    const newEntry = new EntryMessage(entry);
+    const newEntry = new EntryMessage({ ...entry, creator: req.userId });
+
+    if(!req.userId) return res.json({ message: "Unauthenticated" });
 
     try {
         await newEntry.save();
@@ -27,6 +31,8 @@ export const createEntry = async (req, res) => {
 export const updateEntry = async (req, res) => {
     const { id: _id } = req.params; //renames to _id to fit backend schema
     const entry = req.body
+
+    if(!req.userId) return res.json({ message: "Unauthenticated" });
 
     if(!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('Invalid entry id');
