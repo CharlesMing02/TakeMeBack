@@ -10,29 +10,28 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
+    toolbar: {
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'flex-end'
     },
     title: {
-        flexGrow: 1,
+        // flexGrow: 1,
         color: 'white',
         textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: 24
+        paddingLeft: 24,
+        paddingRight: 24,
+        maxWidth: 200
+    },
+    userOptions: {
+        display: 'flex',
+        justifyContent: 'space-between'
     },
     score: {
         width: '100%',
         maxWidth: 100,
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
     }
 }));
-
-// appBar: {
-//     borderRadius: 15,
-//     margin: '30px 0',
-//     display: 'flex',
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
