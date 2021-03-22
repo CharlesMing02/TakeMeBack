@@ -5,7 +5,7 @@ import { getEntries } from '../../actions/entries';
 
 import Entries from '../Entries/Entries';
 import Form from '../Form/Form';
-import useStyles from './styles';;
+import useStyles from './styles';
 
 const ViewAll = () => {
     const classes = useStyles();
@@ -24,7 +24,7 @@ const ViewAll = () => {
                         <Entries setCurrentId={setCurrentId}/>
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                            <Form currentId={currentId} setCurrentId={setCurrentId}/>
+                        <Form currentId={currentId} setCurrentId={setCurrentId}/>
                     </Grid>
                 </Grid>
             </Container>
