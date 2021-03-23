@@ -30,7 +30,7 @@ const Navbar = () => {
             if(decodedToken.exp * 1000 < new Date().getTime()) {
                 logout();
             } else {
-                dispatch({ type: 'AUTH', data: user });
+                dispatch({ type: 'AUTH', data: JSON.parse(localStorage.getItem('profile')) });
             }
         }
 
