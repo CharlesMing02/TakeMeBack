@@ -14,3 +14,5 @@ Todo:
 - implement updateEntry in Log.js
 - minor bug where editing entries in ViewAll doesn't always update unless you refresh
 - improve responsive: have to use more grids with breakpoints
+- google login completely broken because can't keep track of logged/guessed/points/streak
+- need to initialize users with a few entries (otherwise getGuessEntry crashes app)
