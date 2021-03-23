@@ -3,10 +3,14 @@ A fun and rewarding web app that turns journaling into a game - earn points and 
 
 Features:
 
-Stack:
+Stack/Technologies:
+- MERN
+- Redux, redux-thunk
+- Mongoose
 
 This project is in early development!
 
 Todo:
 - implement updateEntry in Log.js
 - minor bug where editing entries in ViewAll doesn't always update unless you refresh
+- improve responsive: have to use more grids with breakpoints
