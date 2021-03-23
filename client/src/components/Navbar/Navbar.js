@@ -3,11 +3,13 @@ import useStyles from './styles';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { refreshUser } from '../../actions/auth';
 import decode from 'jwt-decode';
 
 import AvatarMenu from '../AvatarMenu/AvatarMenu';
 
 const Navbar = () => {
+    console.log('render')
     const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
@@ -24,13 +26,13 @@ const Navbar = () => {
 
     useEffect(() => {
         const token = user?.token;
-
+        console.log('useffect')
         if(token) {
             const decodedToken = decode(token);
             if(decodedToken.exp * 1000 < new Date().getTime()) {
                 logout();
             } else {
-                dispatch({ type: 'AUTH', data: JSON.parse(localStorage.getItem('profile')) });
+                dispatch(refreshUser(user.result));
             }
         }
 

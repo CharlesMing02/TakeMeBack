@@ -45,3 +45,13 @@ export const getGuessEntry = (id) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const refreshUser = (formData) => async (dispatch) => {
+    try {
+        const { data } = await api.signIn(formData);
+
+        dispatch({ type: AUTH, data });
+    } catch (error) {
+        console.log(error);
+    }
+}
