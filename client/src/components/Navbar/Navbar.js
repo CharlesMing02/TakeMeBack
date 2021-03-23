@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import useStyles from './styles';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../../actions/auth';
 import decode from 'jwt-decode';
 
@@ -11,7 +11,7 @@ import AvatarMenu from '../AvatarMenu/AvatarMenu';
 const Navbar = () => {
     console.log('render')
     const classes = useStyles();
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const user = useSelector((state) => state.auth.authData);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -20,8 +20,6 @@ const Navbar = () => {
         dispatch({ type: 'LOGOUT' });
 
         history.push('./');
-
-        setUser(null);
     };
 
     useEffect(() => {
@@ -35,8 +33,6 @@ const Navbar = () => {
                 dispatch(refreshUser(user.result));
             }
         }
-
-        setUser(JSON.parse(localStorage.getItem('profile')));
     },[location]);
 
     return (
