@@ -40,7 +40,6 @@ export const getGuessEntry = (id) => async (dispatch) => {
         dispatch({ type: GET_GUESS_ENTRY, payload: data });
 
         await api.updateAskedCount(data._id);
-        //dispatch({ type: UPDATE_ASKED_COUNT, payload: data2 });
     } catch (error) {
         console.log(error);
     }

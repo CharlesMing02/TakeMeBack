@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,15 +8,15 @@ import { createEntry, updateEntry } from '../../../../actions/entries';
 import { updateUser, getGuessEntry } from '../../../../actions/auth';
 
 const Log = () => {
-    const dailyEntry = useSelector((state) => state.auth.dailyEntry);
-    const [entryData, setEntryData] = useState({
-        highlights: dailyEntry?.highlights,
-        description: dailyEntry?.description,
-        selectedFile: dailyEntry?.selectedFile
-    });
+    const [entryData, setEntryData] = useState(JSON.parse(localStorage.getItem('dailyEntry')));
+    //const dailyEntry = useSelector((state) => state.auth.dailyEntry);
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
+
+    useEffect(() => {
+        dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
+    }, [dispatch, entryData])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,12 +35,12 @@ const Log = () => {
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{user.result.logged ? 'Editing Daily Entry': 'Daily Entry'}</Typography>
                 <TextField name="highlights" variant="outlined" label="Highlights" fullWidth
-                    value={entryData.highlights}
+                    value={entryData?.highlights}
                     onChange={(e) => setEntryData({ ...entryData, highlights: e.target.value})}
                     inputProps = {{ maxLength: 30 }}
                 />
                 <TextField name="description" variant="outlined" label="Describe your day" fullWidth multiline
-                    value={entryData.description}
+                    value={entryData?.description}
                     onChange={(e) => setEntryData({ ...entryData, description: e.target.value})}
                 />
                 <div className={classes.fileInput}>
@@ -50,7 +50,11 @@ const Log = () => {
                         onDone={({base64}) => setEntryData({ ...entryData, selectedFile: base64})}
                     />
                 </div>
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Log!</Button>
+                {user.result.logged ? (
+                    <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Save</Button>
+                ) : (
+                    <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Log!</Button>
+                )}
                 
             </form>
         </Paper>
