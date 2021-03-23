@@ -1,7 +1,7 @@
-import { AUTH, LOGOUT, UPDATE_USER } from '../constants/actionTypes';
+import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY } from '../constants/actionTypes';
 
 /* eslint-disable import/no-anonymous-default-export */
-const authReducer = (state = { authData: null, dailyEntry: { highlights: '', description: '', selectedFile: '' } }, action) => {
+const authReducer = (state = { authData: null, dailyEntry: { highlights: '', description: '', selectedFile: '' }, guessEntry: null }, action) => {
     switch (action.type) {
         case AUTH:
             const missingPoints = { ...action?.data };
@@ -20,10 +20,12 @@ const authReducer = (state = { authData: null, dailyEntry: { highlights: '', des
             return { ...state, authData: null };
         case UPDATE_USER:
             const old = state.authData;
-            old.result = { ...action?.payload }
-            console.log({ ...state, authData: old });
+            old.result = { ...action?.payload };
             localStorage.setItem('profile', JSON.stringify(old));
             return { ...state, authData: old };
+        case GET_GUESS_ENTRY:
+            console.log({ ...state, guessEntry: action.payload })
+            return { ...state, guessEntry: action.payload }
         default:
             return state;
     }

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import { createEntry, updateEntry } from '../../../../actions/entries';
-import { updateUser } from '../../../../actions/auth';
+import { updateUser, getGuessEntry } from '../../../../actions/auth';
 
 const Log = () => {
     const dailyEntry = useSelector((state) => state.auth.dailyEntry);
@@ -24,11 +24,10 @@ const Log = () => {
             // dispatch(updateEntry(currentId, entryData)); todo: figure out how to get currentId (which is the id of the entry that user previously filled out)
         } else {
             dispatch(createEntry(entryData));
-            dispatch(updateUser(user.result._id, {logged: true}))
-            //update backend: set logged true
-            //update redux: logged (dispatch an action. in the reducer create a new type, maybe UPDATE)
+            dispatch(updateUser(user.result._id, {logged: true}));
+            dispatch(getGuessEntry(user.result._id));
             //dispatch an action in auth.js for the api to fetch a random entry; then populate that entry into redux store: will need to add new property to authReducer state
-            //in that same action, dispatch an update to the timesAsked of the entry
+            //in that same action, dispatch an update to the askedCount of the entry: already implemented
         }
     }
 

@@ -18,3 +18,4 @@ export const updateAskedCount = (id) => API.patch(`/entries/${id}/updateAskedCou
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 export const updateUser = (id, updatedUser) => API.patch(`/user/${id}`, updatedUser);
+export const getGuessEntry = (id) => API.get(`/user/${id}`);

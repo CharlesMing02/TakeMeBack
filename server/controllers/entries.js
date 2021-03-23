@@ -47,7 +47,7 @@ export const updateAskedCount = async (req, res) => {
 
     if(!req.userId) return res.json({ message: "Unauthenticated" });
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send('Invalid entry id');
     }
 

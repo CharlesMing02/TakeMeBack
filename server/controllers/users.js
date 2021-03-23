@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 
 import User from '../models/user.js';
+import EntryMessage from '../models/entryMessage.js';
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;
@@ -49,4 +50,25 @@ export const updateUser = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(_id, { ...user, _id }, { new: true });
     res.json(updatedUser);
+}
+
+export const getGuessEntry = async (req, res) => {
+    try {
+        const _id = req.params.id;
+    
+        EntryMessage.find({ creator: _id }).estimatedDocumentCount({}).exec(function (err, count) {
+            const random = Math.floor(Math.random() * count / 2) //get random entry with the max amount of skips being the number of entries
+            console.log(random)
+            EntryMessage.findOne({ creator: _id }).skip(random).exec(
+                function (err, result) {
+                    console.log(result.description);
+                    res.status(200).json(result);
+                }
+            );
+        });
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message})
+    }
+
 }
