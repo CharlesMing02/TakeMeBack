@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY } from '../constants/actionTypes';
+import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY } from '../constants/actionTypes';
 
 /* eslint-disable import/no-anonymous-default-export */
 const authReducer = (state = { authData: null, dailyEntry: { highlights: '', description: '', selectedFile: '' }, guessEntry: null }, action) => {
@@ -26,6 +26,8 @@ const authReducer = (state = { authData: null, dailyEntry: { highlights: '', des
         case GET_GUESS_ENTRY:
             console.log({ ...state, guessEntry: action.payload })
             return { ...state, guessEntry: action.payload }
+        case UPDATE_DAILY_ENTRY:
+            return { ...state, dailyEntry: action?.data }
         default:
             return state;
     }

@@ -20,14 +20,13 @@ const Log = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
         if(user.result.logged) {
             // dispatch(updateEntry(currentId, entryData)); todo: figure out how to get currentId (which is the id of the entry that user previously filled out)
         } else {
             dispatch(createEntry(entryData));
             dispatch(updateUser(user.result._id, {logged: true}));
-            dispatch(getGuessEntry(user.result._id));
-            //dispatch an action in auth.js for the api to fetch a random entry; then populate that entry into redux store: will need to add new property to authReducer state
-            //in that same action, dispatch an update to the askedCount of the entry: already implemented
+            dispatch(getGuessEntry(user.result._id)); //note: this also increments the askedCount of that entry
         }
     }
 
