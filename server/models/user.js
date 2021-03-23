@@ -6,7 +6,9 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     id: { type: String },
     streak: { type: Number, default: 0 },
-    points: { type: Number, default: 0 }
+    points: { type: Number, default: 0 },
+    logged: { type: Boolean, default: false },
+    guessed: { type: Boolean, default: false }
 });
 
 const User = mongoose.model('User', userSchema)

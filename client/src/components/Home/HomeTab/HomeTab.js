@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box, CircularProgress } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
+import Log from './Log/Log';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -37,8 +39,9 @@ function a11yProps(index) {
     };
 }
 
-const HomeTab = ({ }) => {
-    //const entries = useSelector((state) => state.entries); //gets from global redux state
+const HomeTab = () => {
+    const user = useSelector((state) => state.auth.authData); //gets from global redux state
+    console.log(user)
     const classes = useStyles();
 
     //console.log(entries);
@@ -62,11 +65,11 @@ const HomeTab = ({ }) => {
                 className={classes.tabs}
             >
                 <Tab label="Log" {...a11yProps(0)} />
-                <Tab label="Guess" {...a11yProps(1)} />
-                <Tab label="Reflect" {...a11yProps(2)} />
+                <Tab label="Guess" {...a11yProps(1)} disabled={!user.result.logged}/>
+                <Tab label="Reflect" {...a11yProps(2)} disabled={!user.result.guessed}/>
             </Tabs>
             <TabPanel value={value} index={0}>
-                Log
+                <Log/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Guess
