@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import useStyles from './styles';
 import Log from './Log/Log';
 import Guess from './Guess/Guess';
+import Reflect from './Reflect/Reflect';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -76,7 +77,7 @@ const HomeTab = () => {
                 <Guess/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Entry
+                <Reflect/>
             </TabPanel>
         </div>
     );

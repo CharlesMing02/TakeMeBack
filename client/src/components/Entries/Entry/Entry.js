@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import useStyles from './styles';
 
-const Entry = ({ entry, setCurrentId }) => {
+const Entry = ({ entry, setCurrentId, noEdit }) => {
     const classes = useStyles();
 
     return (
@@ -23,9 +23,11 @@ const Entry = ({ entry, setCurrentId }) => {
                 <Typography className={classes.timesAsked} variant="body2">
                     {`Times asked: ${entry.askedCount}`}
                 </Typography>
-                <Button color="primary" onClick={() => setCurrentId(entry._id)} variant="outlined">
-                    <EditIcon/>
-                </Button>
+                {noEdit ? null : (
+                    <Button color="primary" onClick={() => setCurrentId(entry._id)} variant="outlined">
+                        <EditIcon/>
+                    </Button>
+                )}
             </Grid>
             
         </Card>

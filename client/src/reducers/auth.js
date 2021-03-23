@@ -1,15 +1,16 @@
-import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY } from '../constants/actionTypes';
+import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY, UPDATE_GUESS_INFO } from '../constants/actionTypes';
 
 /* eslint-disable import/no-anonymous-default-export */
-const authReducer = (state = { authData: null, dailyEntry: null, guessEntry: JSON.parse(localStorage.getItem('guessEntry')) }, action) => {
+const authReducer = (state = { authData: null, dailyEntry: null, guessEntry: JSON.parse(localStorage.getItem('guessEntry')),
+                                guessInfo: JSON.parse(localStorage.getItem('guessInfo')) }, action) => {
     switch (action.type) {
         case AUTH:
             const missingPoints = { ...action?.data };
-            if (missingPoints.hasOwnProperty('results')) {
-                if (!missingPoints.results.hasOwnProperty('streak')) { //looking back not sure why results/result
+            if (missingPoints.hasOwnProperty('result')) {
+                if (!missingPoints.result.hasOwnProperty('streak')) { //looking back not sure why results/result
                     missingPoints.result.streak = 0;
                 }
-                if (!missingPoints.results.hasOwnProperty('points')) {
+                if (!missingPoints.result.hasOwnProperty('points')) {
                     missingPoints.result.points = 0;
                 }
             }
@@ -29,6 +30,9 @@ const authReducer = (state = { authData: null, dailyEntry: null, guessEntry: JSO
         case UPDATE_DAILY_ENTRY:
             localStorage.setItem('dailyEntry', JSON.stringify(action.data));
             return { ...state, dailyEntry: action?.data }
+        case UPDATE_GUESS_INFO:
+            localStorage.setItem('guessInfo', JSON.stringify(action.data));
+            return { ...state, guessInfo: action?.data }
         default:
             return state;
     }

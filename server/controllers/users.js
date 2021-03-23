@@ -56,7 +56,8 @@ export const getGuessEntry = async (req, res) => {
     try {
         const _id = req.params.id;
     
-        EntryMessage.find({ creator: _id }).estimatedDocumentCount({}).exec(function (err, count) {
+        EntryMessage.countDocuments({ creator: _id }).exec(function (err, count) {
+            console.log('count', count)
             const random = Math.floor(Math.random() * count / 2) //get random entry with the max amount of skips being the number of entries
             console.log(random)
             EntryMessage.findOne({ creator: _id }).skip(random).exec(
