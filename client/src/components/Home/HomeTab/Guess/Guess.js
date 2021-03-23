@@ -25,7 +25,7 @@ const Guess = () => {
         const difference = Math.floor(ms/1000/60/60/24); //above lines calculate difference in days
         console.log('difference', difference)
 
-        const points = Math.floor(Math.log(user.result.streak+1) * Math.max(100-difference, 0));
+        const points = Math.floor((1+Math.log(user.result.streak+1)) * Math.max(100-difference, 0));
         console.log('points', points)
 
         dispatch(updateUser(user.result._id, { guessed: true, points: user.result.points + points, streak: user.result.streak + 1 }));
