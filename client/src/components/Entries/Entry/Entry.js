@@ -16,6 +16,11 @@ const Entry = ({ entry, setCurrentId, noEdit }) => {
                     <Typography gutterBottom variant="h4">
                         {moment(entry.createdAt).format("MMMM Do, YYYY")}
                     </Typography>
+                    {entry.highlights.map((h) => (
+                        <Typography variant="body2">
+                            {h}
+                        </Typography>
+                    ))}
                     <Typography variant="body2" color="textSecondary">
                         {entry.description}
                     </Typography>

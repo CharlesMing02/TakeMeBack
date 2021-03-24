@@ -1,8 +1,8 @@
 import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY, UPDATE_GUESS_INFO } from '../constants/actionTypes';
 
 /* eslint-disable import/no-anonymous-default-export */
-const authReducer = (state = { authData: JSON.parse(localStorage.getItem('profile')), dailyEntry: null, guessEntry: JSON.parse(localStorage.getItem('guessEntry')),
-                                guessInfo: JSON.parse(localStorage.getItem('guessInfo')) }, action) => {
+const authReducer = (state = { authData: JSON.parse(localStorage.getItem('profile')), dailyEntry: JSON.parse(localStorage.getItem('dailyEntry')), 
+                    guessEntry: JSON.parse(localStorage.getItem('guessEntry')), guessInfo: JSON.parse(localStorage.getItem('guessInfo')) }, action) => {
     switch (action.type) {
         case AUTH:
             const missingPoints = { ...action?.data };
