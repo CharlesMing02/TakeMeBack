@@ -8,7 +8,7 @@ import { createEntry, updateEntry } from '../../actions/entries';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [entryData, setEntryData] = useState({ //array destructuring: first element is state object, second is setState function
-        highlights: '',
+        highlights: ['','',''],
         description: '',
         selectedFile: ''
     });
@@ -19,6 +19,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     useEffect(() => {
         if(entry) setEntryData(entry);
+        console.log(entryData)
     }, [entry])
 
     const handleSubmit = (e) => {
@@ -45,10 +46,20 @@ const Form = ({ currentId, setCurrentId }) => {
         <Paper className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{currentId ? 'Editing Past Entry': 'Daily Entry'}</Typography>
-                <TextField name="highlights" variant="outlined" label="Highlights" fullWidth
-                    value={entryData.highlights}
-                    onChange={(e) => setEntryData({ ...entryData, highlights: e.target.value})}
-                    inputProps = {{ maxLength: 30 }}
+                <TextField name="h1" variant="outlined" label="H1" fullWidth
+                    value={entryData.highlights[0]}
+                    onChange={(e) => setEntryData({ ...entryData, highlights: [e.target.value, entryData.highlights[1], entryData.highlights[2]]})}
+                    inputProps = {{ maxLength: 50 }}
+                />
+                <TextField name="h2" variant="outlined" label="H2" fullWidth
+                    value={entryData.highlights[1]}
+                    onChange={(e) => setEntryData({ ...entryData, highlights: [entryData.highlights[0], e.target.value, entryData.highlights[2]]})}
+                    inputProps = {{ maxLength: 50 }}
+                />
+                <TextField name="h2" variant="outlined" label="H2" fullWidth
+                    value={entryData.highlights[2]}
+                    onChange={(e) => setEntryData({ ...entryData, highlights: [entryData.highlights[0], entryData.highlights[1], e.target.value]})}
+                    inputProps = {{ maxLength: 50 }}
                 />
                 <TextField name="description" variant="outlined" label="Describe your day" fullWidth multiline
                     value={entryData.description}

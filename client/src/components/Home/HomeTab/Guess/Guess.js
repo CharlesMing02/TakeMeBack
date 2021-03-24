@@ -46,13 +46,13 @@ const Guess = ({ setTab }, props) => {
                         <Grid container spacing={2}>
                             <Grow in={transition} style={{ transformOrigin: '0 0 0'}} {...{timeout: 1000}}><Typography variant="h6">Some highlights from this day were:</Typography></Grow>
                             <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '0.5s'}} {...{timeout: 2000}}>
-                                <Typography variant="body1">{guessEntry?.highlights}</Typography>
+                                <Typography variant="body1">{guessEntry?.highlights[0]}</Typography>
                             </Grow>
                             <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1s'}} {...{timeout: 3000}}>
-                                <Typography variant="body1">Ate a banana</Typography>
+                                <Typography variant="body1">{guessEntry?.highlights[1]}</Typography>
                             </Grow>
                             <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1.5s'}} {...{timeout: 4000}}>
-                                <Typography {...props} variant="body1">Ate a banana</Typography>
+                                <Typography {...props} variant="body1">{guessEntry?.highlights[2]}</Typography>
                             </Grow>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <KeyboardDatePicker

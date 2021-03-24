@@ -8,6 +8,7 @@ import cron from 'node-cron';
 import entryRoutes from './routes/entries.js';
 import userRoutes from './routes/users.js';
 import User from './models/user.js';
+import EntryMessage from './models/entryMessage.js';
 
 const app = express();
 dotenv.config();
@@ -20,7 +21,7 @@ app.use(cors());
 app.use('/entries', entryRoutes);
 app.use('/user', userRoutes);
 
-cron.schedule('0,30 * * * *', async () => {
+cron.schedule('5,30 * * * *', async () => {
     const res = await User.updateMany({guessed: false}, {streak: 0});
     console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
 
