@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, CircularProgress } from '@material-ui/core';
+import { Tabs, Tab, Box, Container, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
@@ -17,12 +17,13 @@ function TabPanel(props) {
             hidden={value !== index}
             id={`vertical-tabpanel-${index}`}
             aria-labelledby={`vertical-tab-${index}`}
+            style={{flexGrow: 1}}
             {...other}
         >
             {value === index && (
-            <Box p={3}>
+            <Container maxWidth="md" >
                 <>{children}</> 
-            </Box>
+            </Container>
             )}
         </div>
     );
@@ -60,8 +61,8 @@ const HomeTab = () => {
                 orientation="vertical"
                 textColor="primary"
                 indicatorColor="primary"
+                variant="scrollable"
                 value={value}
-                centered
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
@@ -71,10 +72,10 @@ const HomeTab = () => {
                 <Tab label="Reflect" {...a11yProps(2)} disabled={!user.result.guessed}/>
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Log/>
+                <Log setTab={setValue}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Guess/>
+                <Guess setTab={setValue}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <Reflect/>

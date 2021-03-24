@@ -45,7 +45,8 @@ const theme = createMuiTheme({
             fontFamily: "'Playfair Display', sans-serif",
             fontWeight: 400
         },
-    }
+    },
+    
 })
 
 const App = () => {

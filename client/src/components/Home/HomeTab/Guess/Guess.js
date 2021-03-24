@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Typography, Paper, Container } from '@material-ui/core';
+import { Button, Typography, Paper, Grid, Grow } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from '@date-io/date-fns';
 
 import useStyles from './styles';
 import { updateUser } from '../../../../actions/auth';
 
-const Guess = () => {
+const Guess = ({ setTab }, props) => {
     const [date, changeDate] = useState(new Date());
+    const [transition, changeTransition] = useState(false);
     const classes = useStyles();
     const dispatch = useDispatch();
     const guessEntry = useSelector((state) => state.auth.guessEntry);
@@ -30,33 +31,49 @@ const Guess = () => {
 
         dispatch(updateUser(user.result._id, { guessed: true, points: user.result.points + points, streak: user.result.streak + 1 }));
         dispatch({ type: 'UPDATE_GUESS_INFO', data: {difference: difference, points: points} });
+        setTab(2)
     }
+    setTimeout(() => {
+        changeTransition(true);
+    }, 2000)
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={3}>
             {user.result.logged ? (
-                <Container maxWidth="md">
-                    <Typography variant="h6">Some highlights from this day were...</Typography>
+                <>
+                    <Typography variant="h4">Retrieving a forgotten memory...</Typography>
                     <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                        
-                        <Typography variant="body1">test{guessEntry?.highlights}</Typography>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <DatePicker
-                                autoOk
-                                orientation="landscape"
-                                variant="static"
-                                openTo="date"
-                                value={date}
-                                onChange={changeDate}
-                            />
-                        </MuiPickersUtilsProvider>
-                        {!user.result.guessed ? (
-                            <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Guess!</Button>
-                        ) : (
-                            null
-                        )}
+                        <Grid container spacing={2}>
+                            <Grow in={transition} style={{ transformOrigin: '0 0 0'}} {...{timeout: 1000}}><Typography variant="h6">Some highlights from this day were:</Typography></Grow>
+                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '0.5s'}} {...{timeout: 2000}}>
+                                <Typography variant="body1">{guessEntry?.highlights}</Typography>
+                            </Grow>
+                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1s'}} {...{timeout: 3000}}>
+                                <Typography variant="body1">Ate a banana</Typography>
+                            </Grow>
+                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1.5s'}} {...{timeout: 4000}}>
+                                <Typography {...props} variant="body1">Ate a banana</Typography>
+                            </Grow>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    autoOk
+                                    variant="inline"
+                                    inputVariant="outlined"
+                                    label="When is this from?"
+                                    format="MM/dd/yyyy"
+                                    value={date}
+                                    InputAdornmentProps={{ position: "start" }}
+                                    onChange={date => changeDate(date)}
+                                />
+                            </MuiPickersUtilsProvider>
+                            {!user.result.guessed ? (
+                                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Guess!</Button>
+                            ) : (
+                                null
+                            )}
+                        </Grid>
                     </form>
-                    </Container>
+                </>
             ) : null }
         </Paper>
         

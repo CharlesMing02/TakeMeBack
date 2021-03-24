@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, CircularProgress } from '@material-ui/core';
+import { Tabs, Tab, Container, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 
@@ -17,12 +17,13 @@ function TabPanel(props) {
             hidden={value !== index}
             id={`vertical-tabpanel-${index}`}
             aria-labelledby={`vertical-tab-${index}`}
+            style={{flexGrow: 1}}
             {...other}
         >
             {value === index && (
-            <Box p={3}>
+            <Container maxWidth="md">
                 <>{children}</> 
-            </Box>
+            </Container>
             )}
         </div>
     );

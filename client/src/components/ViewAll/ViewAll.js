@@ -19,14 +19,23 @@ const ViewAll = () => {
     return (
         <Grow in>
             <Container className={classes.main} maxWidth={false}>
-                <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-                    <Grid item xs={12} sm={8}>
-                        <Entries setCurrentId={setCurrentId}/>
+                {currentId ? (
+                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+                        <Grid item xs={12} sm={8}>
+                            <Entries setCurrentId={setCurrentId}/>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Form currentId={currentId} setCurrentId={setCurrentId}/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <Form currentId={currentId} setCurrentId={setCurrentId}/>
+                ) : (
+                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+                        <Grid item xs={12}>
+                            <Entries setCurrentId={setCurrentId}/>
+                        </Grid>
                     </Grid>
-                </Grid>
+                )}
+                
             </Container>
         </Grow>
     )

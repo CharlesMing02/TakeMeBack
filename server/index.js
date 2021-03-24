@@ -20,7 +20,7 @@ app.use(cors());
 app.use('/entries', entryRoutes);
 app.use('/user', userRoutes);
 
-cron.schedule('14,16 * * * *', async () => {
+cron.schedule('0,30 * * * *', async () => {
     const res = await User.updateMany({guessed: false}, {streak: 0});
     console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
 
