@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Box, Container, CircularProgress } from '@material-ui/core';
+import { Tabs, Tab, Container } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
@@ -51,9 +51,19 @@ const HomeTab = () => {
 
     const [value, setValue] = React.useState(0);
 
+    useEffect(() => {
+        console.log('useEffect storage removal:', user.result.logged === false)
+        if (user.result.logged === false) {
+            localStorage.removeItem('dailyEntry');
+            localStorage.removeItem('guessEntry');
+            localStorage.removeItem('guessInfo');
+        }
+    }, [user.result.logged])
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
     return (
         <div className={classes.root}>

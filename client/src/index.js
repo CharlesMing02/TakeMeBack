@@ -9,12 +9,15 @@ import reducers from './reducers';
 import App from './App';
 import './index.css';
 
+//for local redux devtool
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // Set up redux
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDom.render(
     <Provider store={store}>
         <App />
     </Provider>,
      document.getElementById('root')
-);
+); 
