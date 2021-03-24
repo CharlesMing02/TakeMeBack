@@ -1,5 +1,5 @@
 # TakeMeBack
-A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia!
+A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia! Add songs, media, news links, etc. Each entry is a virtual time capsule, buried and rediscovered when you least expect it.
 
 Features:
 
@@ -7,6 +7,8 @@ Stack/Technologies:
 - MERN
 - Redux, redux-thunk
 - Mongoose
+- Node-cron
+- Axios
 
 This project is in early development!
 
