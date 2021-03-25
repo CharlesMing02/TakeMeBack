@@ -44,10 +44,7 @@ function a11yProps(index) {
 
 const HomeTab = () => {
     const user = useSelector((state) => state.auth.authData); //gets from global redux state
-    console.log(user)
     const classes = useStyles();
-
-    //console.log(entries);
 
     const [value, setValue] = React.useState(0);
 

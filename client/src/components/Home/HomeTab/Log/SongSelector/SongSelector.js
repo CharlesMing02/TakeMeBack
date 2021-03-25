@@ -64,7 +64,7 @@ const SongSelector = () => {
             onClose={() => {
                 setOpen(false);
             }}
-            autocomplete
+            autoComplete
             value={dailyEntry?.song}
             filterOptions={(x) => x}
             getOptionLabel={(song) => `${song.title} - ${song?.user?.username}`}

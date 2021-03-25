@@ -8,7 +8,6 @@ import HomeTab from './HomeTab/HomeTab';
 const Home = () => {
     const classes = useStyles();
     const userInfo = useSelector((state) => state.auth);
-    console.log(userInfo)
 
     return (
         <Grow in>

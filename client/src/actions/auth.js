@@ -18,7 +18,7 @@ export const signup = (formData, history) => async (dispatch) => {
         const { data } = await api.signUp(formData);
 
         dispatch({ type: AUTH, data });
-        //dispatch createEntry action with a few starter entries
+        //dispatch createEntry action with a few starter entries?
 
         history.push('/')
     } catch (error) {

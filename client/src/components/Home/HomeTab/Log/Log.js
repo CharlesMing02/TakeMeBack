@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, Paper, Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Paper, Grid, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import ReactPlayer from 'react-player/soundcloud'
 
 import useStyles from './styles';
 import { createEntry, updateEntry } from '../../../../actions/entries';
 import { updateUser, getGuessEntry } from '../../../../actions/auth';
-import { fetchSong } from '../../../../api/index';
 import SongSelector from './SongSelector/SongSelector';
 
 const Log = ({ setTab }) => {
     const entryData = useSelector((state) => state.auth.dailyEntry);
+    const [error, setError] = useState(false);
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
@@ -23,28 +25,37 @@ const Log = ({ setTab }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let parseHighlights = { ...entryData, highlights: [entryData.h1, entryData.h2, entryData.h3]};
-        console.log(parseHighlights);
         const { h1, h2, h3, ...rest } = parseHighlights;
-        console.log(rest);
-        dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
-        if(user.result.logged) {
-            // dispatch(updateEntry(currentId, entryData)); todo: figure out how to get currentId (which is the id of the entry that user previously filled out)
+        if (rest.highlights.includes(undefined) || rest.highlights.includes('')) {
+            setError(true);
+            return
         } else {
-            dispatch(createEntry(rest));
-            dispatch(updateUser(user.result._id, {logged: true}));
-            dispatch(getGuessEntry(user.result._id)); //note: this also increments the askedCount of that entry
-            setTab(1)
+            setError(false);
+            dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
+            if(user.result.logged) {
+                // dispatch(updateEntry(currentId, entryData)); todo: figure out how to get currentId (which is the id of the entry that user previously filled out)
+            } else {
+                dispatch(createEntry(rest));
+                dispatch(updateUser(user.result._id, {logged: true}));
+                dispatch(getGuessEntry(user.result._id)); //note: this also increments the askedCount of that entry
+                setTab(1)
+            }
         }
+
     }
 
-    useEffect(() => {
-        const fetch = async () => { //must define new async function to avoid using async directly in useEffect
-            const { data } = await fetchSong('psycho');
-            console.log(data);
-        }
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
 
-        fetch();
-    }, [])
+    const uploadImage = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await toBase64(file);
+        dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: base64}});
+    }
 
     return (
         <Paper className={classes.paper} elevation={3}>
@@ -65,27 +76,43 @@ const Log = ({ setTab }) => {
                             <Grid item xs={12}><TextField name="h3" variant="outlined" label="" fullWidth inputProps = {{ maxLength: 50 }} required size="small" margin="dense"
                                 value={entryData?.h3}
                                 onChange={handleChange}
+                                error={error}
+                                helperText={error ? 'We recommend filling out all highlights. They will be used to guess this entry later.': ''}
                             /></Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                     <Grid container  justify="center" alignItems="center">
                             <Typography variant='h6'>A song I'm vibing to</Typography>
+                            {entryData?.song ? (
+                                <Grid item xs={12}>
+                                    <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5}
+                                        config={{
+                                            soundcloud: {options: { color: '#ffcba4' }}
+                                        }}/>
+                                </Grid>) : null}
                             <Grid item xs={12}>
                                 <SongSelector/>
                             </Grid>
+                            
                             <Grid item xs={12}>
                                 {entryData?.selectedFile ? (
-                                    <img src={entryData.selectedFile} alt="selected" height="200px"/>
-                                ) : null}
+                                    <Grid container  justify="center">
+                                        <Grid item xs={12} container  justify="center"><img src={entryData.selectedFile} alt="selected" height="200px"/></Grid>
+                                        <Grid item xs={12} container  justify="center"><IconButton aria-label="delete" onClick={() => dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: null}})}>
+                                            <DeleteIcon />
+                                        </IconButton></Grid>
+                                    </Grid>
+                                ) : <Grid container  justify="center">
+                                        <input accept="image/*" type="file" multiple={false} className={classes.input} id="contained-button-file"
+                                            onChange={(e) => {
+                                                console.log('chang')
+                                                uploadImage(e);
+                                            }}
+                                        />
+                                        <label htmlFor="contained-button-file"><Button variant="contained" color="primary" component="span">Upload</Button></label>
+                                    </Grid>}
                             </Grid>
-                            <div className={classes.fileInput}>
-                                <FileBase
-                                    type="file"
-                                    multiple={false}
-                                    onDone={({base64}) => dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: base64}})}
-                                />
-                            </div>
                         </Grid>
                     </Grid>
                     
