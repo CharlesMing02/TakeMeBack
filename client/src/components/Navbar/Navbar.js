@@ -43,7 +43,7 @@ const Navbar = () => {
                     {user ? (
                         <div className={classes.userOptions}>
                             <Typography component={Link} to='/view_all' variant="subtitle1" className={classes.title}>View All</Typography>
-                            <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Leaderboard</Typography>
+                            <Typography component={Link} to='/leaderboard' variant="subtitle1" className={classes.title}>Leaderboard</Typography>
                             <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Settings</Typography>
                             <AvatarMenu user={user} logout={logout}/>
                         </div>

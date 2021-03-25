@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import EntryMessage from '../models/entryMessage.js';
 
 export const getEntries = async (req, res) => {

@@ -1,8 +1,9 @@
-import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY, UPDATE_GUESS_INFO } from '../constants/actionTypes';
+import { AUTH, LOGOUT, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_DAILY_ENTRY, UPDATE_GUESS_INFO, FETCH_USERS } from '../constants/actionTypes';
 
 /* eslint-disable import/no-anonymous-default-export */
 const authReducer = (state = { authData: JSON.parse(localStorage.getItem('profile')), dailyEntry: JSON.parse(localStorage.getItem('dailyEntry')), 
-                    guessEntry: JSON.parse(localStorage.getItem('guessEntry')), guessInfo: JSON.parse(localStorage.getItem('guessInfo')) }, action) => {
+                    guessEntry: JSON.parse(localStorage.getItem('guessEntry')), guessInfo: JSON.parse(localStorage.getItem('guessInfo')),
+                    users:[] }, action) => {
     switch (action.type) {
         case AUTH:
             const missingPoints = { ...action?.data };
@@ -33,6 +34,8 @@ const authReducer = (state = { authData: JSON.parse(localStorage.getItem('profil
         case UPDATE_GUESS_INFO:
             localStorage.setItem('guessInfo', JSON.stringify(action.data));
             return { ...state, guessInfo: action?.data }
+        case FETCH_USERS:
+            return {...state, users: action.payload};
         default:
             return state;
     }

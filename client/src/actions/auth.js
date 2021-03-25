@@ -1,4 +1,4 @@
-import { AUTH, UPDATE_USER, GET_GUESS_ENTRY, UPDATE_ASKED_COUNT } from '../constants/actionTypes';
+import { AUTH, UPDATE_USER, GET_GUESS_ENTRY, FETCH_USERS } from '../constants/actionTypes';
 import * as api from '../api';
 
 export const signin = (formData, history) => async (dispatch) => {
@@ -55,3 +55,12 @@ export const refreshUser = (formData) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const getUsers = () => async (dispatch) => { 
+    try {
+        const { data } = await api.fetchUsers();
+        dispatch({ type: FETCH_USERS, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+};
