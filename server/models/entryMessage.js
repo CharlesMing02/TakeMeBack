@@ -13,6 +13,7 @@ const entrySchema = mongoose.Schema({
         default: 0
     },
     selectedFile: String,
+    song: Object
     // add extra attributes like song, media, etc. later
 });
 

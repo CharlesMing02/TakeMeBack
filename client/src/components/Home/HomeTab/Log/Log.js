@@ -8,6 +8,7 @@ import useStyles from './styles';
 import { createEntry, updateEntry } from '../../../../actions/entries';
 import { updateUser, getGuessEntry } from '../../../../actions/auth';
 import { fetchSong } from '../../../../api/index';
+import SongSelector from './SongSelector/SongSelector';
 
 const Log = ({ setTab }) => {
     const entryData = useSelector((state) => state.auth.dailyEntry);
@@ -70,6 +71,9 @@ const Log = ({ setTab }) => {
                     <Grid item xs={12} sm={6}>
                     <Grid container  justify="center" alignItems="center">
                             <Typography variant='h6'>A song I'm vibing to</Typography>
+                            <Grid item xs={12}>
+                                <SongSelector/>
+                            </Grid>
                             <Grid item xs={12}>
                                 {entryData?.selectedFile ? (
                                     <img src={entryData.selectedFile} alt="selected" height="200px"/>
