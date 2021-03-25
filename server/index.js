@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
+import axios from 'axios';
 
 import entryRoutes from './routes/entries.js';
 import userRoutes from './routes/users.js';
+import mediaRoutes from './routes/media.js';
 import User from './models/user.js';
 import EntryMessage from './models/entryMessage.js';
 
@@ -20,6 +22,7 @@ app.use(cors());
 // adds prefix of entries to all routes from that file
 app.use('/entries', entryRoutes);
 app.use('/user', userRoutes);
+app.use('/media', mediaRoutes);
 
 cron.schedule('5,30 * * * *', async () => {
     const res = await User.updateMany({guessed: false}, {streak: 0});
@@ -28,6 +31,8 @@ cron.schedule('5,30 * * * *', async () => {
     const res2 = await User.updateMany({}, { guessed: false, logged: false });
     console.log(`Reset: ${res2.n}`);
 });
+
+
 
 const PORT = process.env.PORT || 5000;
 

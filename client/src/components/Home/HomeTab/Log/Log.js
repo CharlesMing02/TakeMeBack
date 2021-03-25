@@ -7,6 +7,7 @@ import moment from 'moment';
 import useStyles from './styles';
 import { createEntry, updateEntry } from '../../../../actions/entries';
 import { updateUser, getGuessEntry } from '../../../../actions/auth';
+import { fetchSong } from '../../../../api/index';
 
 const Log = ({ setTab }) => {
     const entryData = useSelector((state) => state.auth.dailyEntry);
@@ -34,6 +35,15 @@ const Log = ({ setTab }) => {
             setTab(1)
         }
     }
+
+    useEffect(() => {
+        const fetch = async () => { //must define new async function to avoid using async directly in useEffect
+            const { data } = await fetchSong('psycho');
+            console.log(data);
+        }
+
+        fetch();
+    }, [])
 
     return (
         <Paper className={classes.paper} elevation={3}>

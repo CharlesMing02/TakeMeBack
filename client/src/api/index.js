@@ -20,3 +20,5 @@ export const signUp = (formData) => API.post('/user/signup', formData);
 export const updateUser = (id, updatedUser) => API.patch(`/user/${id}`, updatedUser);
 export const getGuessEntry = (id) => API.get(`/user/${id}`);
 export const fetchUsers = () => API.get('/user');
+
+export const fetchSong = (query) => API.get('/media/songs', { params: {query: query}});
