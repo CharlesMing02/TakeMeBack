@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Paper, Grid, IconButton } from '@material-ui/core';
+import { TextField, Button, Typography, Paper, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FileBase from 'react-file-base64';
+import DescriptionIcon from '@material-ui/icons/Description';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import ReactPlayer from 'react-player/soundcloud'
@@ -17,6 +21,7 @@ const Log = ({ setTab }) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
+    const [dialOpen, setDialOpen] = useState(false);
 
     const handleChange = (e) => {
         dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, [e.target.name]: e.target.value}});
@@ -57,69 +62,143 @@ const Log = ({ setTab }) => {
         dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: base64}});
     }
 
+    const handleClose = () => {
+        setDialOpen(false);
+    }
+
+    const handleOpen = () => {
+        setDialOpen(true);
+    }
+
+    const handleClick = (key) => { //for click of speed dial
+        const returned = () => {
+            let newData = { ...entryData };
+            if (key==='song') {
+                newData[key] = '';
+            } else {
+                newData[key] = '';
+            }
+            dispatch({ type: 'UPDATE_DAILY_ENTRY', data: newData });
+            handleClose();
+        }
+        return returned;
+    }
+
+    const actions = [ //speed dials options are only available if they have not already been added
+        ...(entryData?.song != null ? [] : [{ icon: <MusicNoteIcon/>, name: 'Add music', handleClick: handleClick('song')}]), //!= actually compares to undefined or null
+        ...(entryData?.selectedFile != null ? [] : [{ icon: <InsertPhotoIcon/>, name: 'Add photo', handleClick: handleClick('selectedFile')}]),
+        ...(entryData?.description != null ? [] : [{ icon: <DescriptionIcon/>, name: 'Add description', handleClick: handleClick('description')}]),
+        ...(entryData?.youtube != null ? [] : [{ icon: <YouTubeIcon/>, name: 'Add YouTube video', handleClick: handleClick('youtube')}]),
+    ];
+    console.log(actions)
+
     return (
         <Paper className={classes.paper} elevation={3}>
             <Typography variant="h4" gutterBottom>{moment(new Date()).format("MMMM Do, YYYY")}</Typography>
+            <SpeedDial ariaLabel="SpeedDial" direction='left' className={classes.speedDial} icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen} open={dialOpen}>
+                {actions.map((action) => (
+                    <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} 
+                        onClick={action.handleClick}
+                    />
+                ))}
+            </SpeedDial>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                        <Grid container  justify="center" alignItems="center">
-                            <Typography variant='h6'>3 highlights of my day were:</Typography>
-                            <Grid item xs={12} ><TextField name="h1" variant="outlined" label="" fullWidth inputProps = {{ maxLength: 50 }} required  margin="dense"
-                                value={entryData?.h1}
-                                onChange={handleChange}
-                            /></Grid>
-                            <Grid item xs={12}><TextField name="h2" variant="outlined" label="" fullWidth inputProps = {{ maxLength: 50 }} required size="small"
-                                value={entryData?.h2}
-                                onChange={handleChange}
-                            /></Grid>
-                            <Grid item xs={12}><TextField name="h3" variant="outlined" label="" fullWidth inputProps = {{ maxLength: 50 }} required size="small" margin="dense"
-                                value={entryData?.h3}
-                                onChange={handleChange}
-                                error={error}
-                                helperText={error ? 'We recommend filling out all highlights. They will be used to guess this entry later.': ''}
-                            /></Grid>
-                        </Grid>
+                <Grid container spacing={4}>
+                    <Grid item xs>
+                        <Card variant="outlined" className={classes.entryCard}>
+                            <CardContent>
+                                <Grid container  justify="center" alignItems="center" spacing={0} >
+                                    <Typography variant='h6'>3 highlights of my day were:</Typography>
+                                    <Grid item xs={12} container justify="center"><TextField name="h1" variant="outlined" label="" style={{width: '90%'}} inputProps = {{ maxLength: 50 }} required  size="small"
+                                        value={entryData?.h1}
+                                        error={error}
+                                        onChange={handleChange}
+                                    /></Grid>
+                                    <Grid item xs={12} container justify="center"><TextField name="h2" variant="outlined" label="" style={{width: '90%'}} inputProps = {{ maxLength: 50 }} required size="small"
+                                        value={entryData?.h2}
+                                        error={error}
+                                        onChange={handleChange}
+                                    /></Grid>
+                                    <Grid item xs={12} container justify="center"><TextField name="h3" variant="outlined" label="" style={{width: '90%'}} inputProps = {{ maxLength: 50 }} required size="small"
+                                        value={entryData?.h3}
+                                        onChange={handleChange}
+                                        error={error}
+                                        helperText={error ? 'Please fill out all highlights. They will be used to guess this entry later.': ''}
+                                    /></Grid>
+                                </Grid>
+                            </CardContent>
+                        </Card>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                    <Grid container  justify="center" alignItems="center">
-                            <Typography variant='h6'>A song I'm vibing to</Typography>
-                            {entryData?.song ? (
-                                <Grid item xs={12}>
-                                    <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5}
-                                        config={{
-                                            soundcloud: {options: { color: '#ffcba4' }}
-                                        }}/>
-                                </Grid>) : null}
-                            <Grid item xs={12}>
-                                <SongSelector/>
-                            </Grid>
-                            
-                            <Grid item xs={12}>
-                                {entryData?.selectedFile ? (
-                                    <Grid container  justify="center">
-                                        <Grid item xs={12} container  justify="center"><img src={entryData.selectedFile} alt="selected" height="200px"/></Grid>
-                                        <Grid item xs={12} container  justify="center"><IconButton aria-label="delete" onClick={() => dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: null}})}>
-                                            <DeleteIcon />
-                                        </IconButton></Grid>
+                    {(entryData?.song || entryData?.song==='') ? (
+                        <Grid item xs>
+                            <Card variant="outlined" className={classes.entryCard}>
+                                <CardContent>
+                                    <Grid container  justify="center" alignItems="center">
+                                        <Typography variant='h6'>A song I'm vibing to</Typography>
+                                        {entryData?.song ? (
+                                            <Grid item xs={12}>
+                                                <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5}
+                                                    config={{
+                                                        soundcloud: {options: { color: '#ffcba4' }}
+                                                    }}/>
+                                            </Grid>) : (
+                                            <Grid item xs={12} container justify="center">
+                                                <SongSelector/>
+                                            </Grid>
+                                        )}
                                     </Grid>
-                                ) : <Grid container  justify="center">
-                                        <input accept="image/*" type="file" multiple={false} className={classes.input} id="contained-button-file"
-                                            onChange={(e) => {
-                                                console.log('chang')
-                                                uploadImage(e);
-                                            }}
-                                        />
-                                        <label htmlFor="contained-button-file"><Button variant="contained" color="primary" component="span">Upload</Button></label>
-                                    </Grid>}
-                            </Grid>
+                                </CardContent>
+                                <CardActions className={classes.actionArea}>
+                                    <Button onClick={() => {dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, song: null} });}} size="small" color="primary" className={classes.cardButton}>
+                                        Delete
+                                    </Button>
+                                </CardActions>
+                            </Card>
                         </Grid>
-                    </Grid>
-                    
-                    <Grid item xs={12}><TextField name="description" variant="outlined" label="Describe your day in more detail" fullWidth multiline
-                        value={entryData?.description}
-                        onChange={handleChange}
-                    /></Grid>
+                    ) : null}
+                    {(entryData?.selectedFile || entryData?.selectedFile==='') ? (
+                        <Grid item xs>
+                            <Card variant="outlined" className={classes.entryCard}>
+                                <CardContent className={classes.imageContent}>
+                                    <Grid container className={classes.imageContent} justify="center" alignItems="center">
+                                        {entryData?.selectedFile ? (
+                                            <img src={entryData.selectedFile} alt="selected" width="100%"/>
+                                        ) : <Grid container justify="center" alignItems="center">
+                                                <input accept="image/*" type="file" multiple={false} className={classes.input} id="contained-button-file"
+                                                    onChange={(e) => {
+                                                        console.log('chang')
+                                                        uploadImage(e);
+                                                    }}
+                                                />
+                                                <label htmlFor="contained-button-file"><Button variant="outlined" color="primary" component="span">Upload Image</Button></label>
+                                            </Grid>}
+                                    </Grid>
+                                </CardContent>
+                                <CardActions>
+                                    <Button onClick={() => {dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, selectedFile: null} });}} size="small" color="primary" className={classes.cardButton}>
+                                        Delete
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ) : null}
+                    {(entryData?.description || entryData?.description==='') ? (
+                        <Grid item xs>
+                            <Card variant="outlined" className={classes.entryCard}>
+                                <CardContent>
+                                    <TextField name="description" variant="outlined" label="Describe your day in more detail" fullWidth multiline
+                                    value={entryData?.description}
+                                    onChange={handleChange}
+                                    />
+                                </CardContent>
+                                <CardActions>
+                                    <Button onClick={() => {dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, description: null} });}} size="small" color="primary" className={classes.cardButton}>
+                                        Delete
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ) : null}
                     
                     {user.result.logged ? (
                         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Edit</Button>

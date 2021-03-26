@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   card: {
     
   },
@@ -11,6 +11,6 @@ export default makeStyles({
     marginLeft: 16,
     display: 'flex',
     alignItems: 'center',
-    color: '#4169E1'
+    color: theme.palette.primary.main
   }
-});
+}));

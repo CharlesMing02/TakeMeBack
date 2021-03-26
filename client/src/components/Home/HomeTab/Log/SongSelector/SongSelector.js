@@ -65,7 +65,7 @@ const SongSelector = () => {
                 setOpen(false);
             }}
             autoComplete
-            value={dailyEntry?.song}
+            value={dailyEntry?.song || undefined}
             filterOptions={(x) => x}
             getOptionLabel={(song) => `${song.title} - ${song?.user?.username}`}
             onChange={(event, newValue) => {
@@ -85,6 +85,7 @@ const SongSelector = () => {
                     InputProps={{
                         ...params.InputProps,
                     }}
+                    style={{width: '95%'}}
                 />
             )}
         />

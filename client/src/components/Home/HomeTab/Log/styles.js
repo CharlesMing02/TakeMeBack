@@ -7,16 +7,31 @@ export default makeStyles((theme) => ({
     },
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
+    position: 'relative'
   },
   form: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  fileInput: {
-    width: '97%',
-    margin: '10px 0',
+  entryCard: {
+    minWidth: 275,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  imageContent: {
+    height: '100%'
+  },
+  cardButton: {
+    marginLeft: 'auto',
+  },
+  speedDial: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    right: theme.spacing(2)
   },
   buttonSubmit: {
     marginBottom: 10,

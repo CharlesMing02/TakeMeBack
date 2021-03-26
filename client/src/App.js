@@ -47,7 +47,6 @@ const theme = createMuiTheme({
             fontWeight: 400
         },
     },
-    
 })
 
 const App = () => {
