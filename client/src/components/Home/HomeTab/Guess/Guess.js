@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Paper, Grid, Grow } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import useStyles from './styles';
 import { updateUser } from '../../../../actions/auth';
+import { getGuessEntry } from '../../../../actions/auth';
 
 const Guess = ({ setTab }, props) => {
     const [date, changeDate] = useState(new Date());
@@ -37,6 +38,14 @@ const Guess = ({ setTab }, props) => {
         changeTransition(true);
     }, 2000)
 
+
+    useEffect(() => {
+        if (user.result.logged && guessEntry===null) { //meaning they logged at a different time, logged out, and logged back in
+            dispatch(getGuessEntry(user.result._id));
+            console.log('got new guess entry')
+        }
+    }, [])
+
     return (
         <Paper className={classes.paper} elevation={3}>
             {user.result.logged ? (
@@ -66,7 +75,7 @@ const Guess = ({ setTab }, props) => {
                                     onChange={date => changeDate(date)}
                                 />
                             </MuiPickersUtilsProvider>
-                            {!user.result.guessed ? (
+                            {(!user.result.guessed && guessEntry !== null) ? (
                                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Guess!</Button>
                             ) : (
                                 null

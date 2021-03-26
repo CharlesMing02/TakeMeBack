@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Paper, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { TextField, Button, Typography, Paper, Grid, Card, CardContent, CardActions } from '@material-ui/core';
 import DescriptionIcon from '@material-ui/icons/Description';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
@@ -22,6 +21,7 @@ const Log = ({ setTab }) => {
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
     const [dialOpen, setDialOpen] = useState(false);
+    const lastEntry = useSelector((state) => state.entries[state.entries.length - 1]); //need to get id for updating
 
     const handleChange = (e) => {
         dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, [e.target.name]: e.target.value}});
@@ -38,7 +38,8 @@ const Log = ({ setTab }) => {
             setError(false);
             dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
             if(user.result.logged) {
-                // dispatch(updateEntry(currentId, entryData)); todo: figure out how to get currentId (which is the id of the entry that user previously filled out)
+                console.log(lastEntry)
+                dispatch(updateEntry(lastEntry._id, rest)); 
             } else {
                 dispatch(createEntry(rest));
                 dispatch(updateUser(user.result._id, {logged: true}));
@@ -88,9 +89,8 @@ const Log = ({ setTab }) => {
         ...(entryData?.song != null ? [] : [{ icon: <MusicNoteIcon/>, name: 'Add music', handleClick: handleClick('song')}]), //!= actually compares to undefined or null
         ...(entryData?.selectedFile != null ? [] : [{ icon: <InsertPhotoIcon/>, name: 'Add photo', handleClick: handleClick('selectedFile')}]),
         ...(entryData?.description != null ? [] : [{ icon: <DescriptionIcon/>, name: 'Add description', handleClick: handleClick('description')}]),
-        ...(entryData?.youtube != null ? [] : [{ icon: <YouTubeIcon/>, name: 'Add YouTube video', handleClick: handleClick('youtube')}]),
+        //...(entryData?.youtube != null ? [] : [{ icon: <YouTubeIcon/>, name: 'Add YouTube video', handleClick: handleClick('youtube')}]),
     ];
-    console.log(actions)
 
     return (
         <Paper className={classes.paper} elevation={3}>

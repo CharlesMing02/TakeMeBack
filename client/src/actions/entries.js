@@ -14,6 +14,7 @@ export const getEntries = () => async (dispatch) => {
 export const createEntry = (newEntry) => async (dispatch) => {
     try {
         const { data } = await api.createEntry(newEntry);
+        console.log(data)
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
         console.log(error);

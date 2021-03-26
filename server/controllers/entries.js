@@ -16,6 +16,7 @@ export const getEntries = async (req, res) => {
 
 export const createEntry = async (req, res) => {
     const entry = req.body;
+    console.log(entry)
     const newEntry = new EntryMessage({ ...entry, creator: req.userId });
 
     if(!req.userId) return res.json({ message: "Unauthenticated" });
