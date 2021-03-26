@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'; //use react hooks rather than dealing with classes and 'this' bindings 
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
-import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
@@ -15,7 +14,6 @@ const Form = ({ currentId, setCurrentId }) => {
     const entry = useSelector((state) => currentId ? state.entries.find((entry) => entry._id === currentId) : null); //find current entry from redux store
     const classes = useStyles();
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if(entry) setEntryData(entry);
@@ -36,7 +34,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const clear = () => {
         setCurrentId(null);
         setEntryData({
-            highlights: '',
+            highlights: ['','',''],
             description: '',
             selectedFile: '' 
         });
@@ -56,7 +54,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) => setEntryData({ ...entryData, highlights: [entryData.highlights[0], e.target.value, entryData.highlights[2]]})}
                     inputProps = {{ maxLength: 50 }}
                 />
-                <TextField name="h2" variant="outlined" label="H2" fullWidth
+                <TextField name="h2" variant="outlined" label="H3" fullWidth
                     value={entryData.highlights[2]}
                     onChange={(e) => setEntryData({ ...entryData, highlights: [entryData.highlights[0], entryData.highlights[1], e.target.value]})}
                     inputProps = {{ maxLength: 50 }}
@@ -65,13 +63,6 @@ const Form = ({ currentId, setCurrentId }) => {
                     value={entryData.description}
                     onChange={(e) => setEntryData({ ...entryData, description: e.target.value})}
                 />
-                <div className={classes.fileInput}>
-                    <FileBase
-                        type="file"
-                        multiple={false}
-                        onDone={({base64}) => setEntryData({ ...entryData, selectedFile: base64})}
-                    />
-                </div>
                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Log!</Button>
                 <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
                 

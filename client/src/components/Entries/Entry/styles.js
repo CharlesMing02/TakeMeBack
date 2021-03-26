@@ -1,11 +1,21 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  card: {
-    
+  paper: {
+    padding: theme.spacing(4),
   },
-  media: {
-    height: 400
+  entryCard: {
+    minWidth: 275,
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  bottomBar: {
+    marginTop: 20,
+    minHeight: 30,
+    display: 'flex',
+    alignItems: "center"
   },
   timesAsked: {
     marginLeft: 16,
