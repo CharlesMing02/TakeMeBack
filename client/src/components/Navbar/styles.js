@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
         //flexGrow: 1,
       },
     appBar: {
-        width: '100%',
         backgroundColor: theme.palette.primary.dark,
         display: 'flex',
         flexDirection: 'row',

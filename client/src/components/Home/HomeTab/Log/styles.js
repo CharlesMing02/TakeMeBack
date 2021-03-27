@@ -31,7 +31,12 @@ export default makeStyles((theme) => ({
   speedDial: {
     position: 'absolute',
     top: theme.spacing(2),
-    right: theme.spacing(2)
+    right: theme.spacing(2),
+    "@media (max-width: 600px)": {
+      position: 'static',
+      marginLeft: 'auto',
+      marginBottom: 10
+    },
   },
   buttonSubmit: {
     marginBottom: 10,

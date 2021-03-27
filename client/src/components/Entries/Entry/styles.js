@@ -9,7 +9,10 @@ export default makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    "@media (max-width: 450px)": {
+      minWidth: 150,
+    },
   },
   bottomBar: {
     marginTop: 20,

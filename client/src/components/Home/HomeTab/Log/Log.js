@@ -95,13 +95,7 @@ const Log = ({ setTab }) => {
     return (
         <Paper className={classes.paper} elevation={3}>
             <Typography variant="h4" gutterBottom>{moment(new Date()).format("MMMM Do, YYYY")}</Typography>
-            <SpeedDial ariaLabel="SpeedDial" direction='left' className={classes.speedDial} icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen} open={dialOpen}>
-                {actions.map((action) => (
-                    <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} 
-                        onClick={action.handleClick}
-                    />
-                ))}
-            </SpeedDial>
+            
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Grid container spacing={4}>
                     <Grid item xs>
@@ -197,6 +191,13 @@ const Log = ({ setTab }) => {
                         </Grid>
                     ) : null}
                     
+                    <SpeedDial ariaLabel="SpeedDial" direction='left' className={classes.speedDial} icon={<SpeedDialIcon/>} onClose={handleClose} onOpen={handleOpen} open={dialOpen}>
+                        {actions.map((action) => (
+                            <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} tooltipPlacement='bottom'
+                                onClick={action.handleClick}
+                            />
+                        ))}
+                    </SpeedDial>
                     {user.result.logged ? (
                         <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Edit</Button>
                     ) : (

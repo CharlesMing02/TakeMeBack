@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Container, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -45,10 +45,16 @@ function a11yProps(index) {
 const Entries = ({ setCurrentId }) => {
     const entries = useSelector((state) => state.entries); //gets from global redux state
     const classes = useStyles();
-
-    console.log(entries);
-
+    const [mobile, setMobile] = useState(false);
     const [value, setValue] = React.useState(0);
+
+    useEffect(() => {
+        const setResponsiveness = () => {
+            return (window.innerWidth < 1000) ? setMobile(true) : setMobile(false);
+        }
+        setResponsiveness();
+        window.addEventListener("resize", () => setResponsiveness());
+    }, []);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -56,16 +62,16 @@ const Entries = ({ setCurrentId }) => {
 
     return (
         !entries.length ? <CircularProgress/> : ( //loading spinner while no entries loaded in
-            <div className={classes.root}>
+            <div className={mobile ? classes.rootMobile : classes.root}>
             <Tabs
-                orientation="vertical"
+                orientation={mobile ? "horizontal" : "vertical"}
                 textColor="primary"
                 indicatorColor="primary"
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
-                className={classes.tabs}
+                className={mobile ? null : classes.tabs}
             >
                 {entries.map((entry) => (
                     <Tab label={moment(entry.createdAt).format("MMM Do YY")} key={entry._id} {...a11yProps(entries.indexOf(entry))} />
