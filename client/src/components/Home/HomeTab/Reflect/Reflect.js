@@ -13,7 +13,7 @@ const Reflect = () => {
     return (
         <Paper className={classes.paper}>
             <Container maxWidth="md">
-                {guessEntry ? (
+                {guessInfo ? (
                     <>
                         {guessInfo.points > 0 ? (
                             <Typography variant='h6'>Great guess! You were off by {guessInfo.difference} days.</Typography>
@@ -23,7 +23,7 @@ const Reflect = () => {
                         <Typography variant='subtitle2'>Streak: +1, Points: +{guessInfo.points}</Typography>
                         <Entry entry={guessEntry} noEdit={true}/>
                     </>
-                ) : null}
+                ) : <Typography variant='h6'>Come back tomorrow for another entry.</Typography>}
             </Container>
         </Paper>
     )

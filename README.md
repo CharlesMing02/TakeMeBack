@@ -1,20 +1,34 @@
-# TakeMeBack
-A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia! Add songs, media, news links, etc. Each entry is a virtual time capsule, buried and rediscovered when you least expect it.
+<a href="https://github.com/CharlesMing02/TakeMeBack"> 
+    <!-- Replace with live link -->
+    <h1 align="center">TakeMeBack</h1>
+</a>
+<p align="center">A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia! <br> Access the site at [link] </p>
 
-Features:
+## About The Project
+I've always wanted to make journaling a habit due to its many benefits -- appreciating each day, reliving forgotten memories, and improving mental clarity -- but struggled to find the discipline to do so. This app overcomes this obstacle by gamifying the process! 
 
-Stack/Technologies:
-- MERN
-- Redux, redux-thunk
-- Mongoose
-- Node-cron
-- Axios
+Users unlock daily guesses by briefly logging their day. The app then displays a snippet of an entry from a random date. The closer the guess, the more points earned. Each entry is like a virtual time capsule, buried and rediscovered when you least expect it. Earn more points by building up streaks of consecutive daily entries, then redeem those points for custom color themes or view the leaderboard for some friendly competition.
 
+### Features: 
+I aimed to make the process as beginner-friendly and flexible as possible. At minimum, an entry consists of three highlights of the day (a proven journaling strategy). Users then have the option to add images, videos, songs, or longer descriptions. 
+
+[insert gif to demonstrate functionality]
+
+Users can also view all past entries at any time. Doing so before guessing breaks their streak, however -- otherwise earning max points becomes too easy.
+
+## Built With:
+- React, react-redux, redux-thunk, react-router-dom, and Material-UI
+- Express, Node.js, axios, and node-cron
+- MongoDB and mongoose
+
+The app also uses the Soundcloud API, bcrypt, jwt-decode, and moment.js.
+
+## Status:
 This project is in early development!
 
-Todo:
-- implement updateEntry in Log.js
-- minor bug where editing entries in ViewAll doesn't always update unless you refresh
-- improve responsive: have to use more grids with breakpoints
-- google login completely broken because can't keep track of logged/guessed/points/streak
-- need to initialize users with a few entries (otherwise getGuessEntry crashes app)
+### Ideas for future features:
+- Add location or weather metadata
+- Mood log with analytics
+
+
+

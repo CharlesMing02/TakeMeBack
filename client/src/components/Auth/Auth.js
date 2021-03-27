@@ -8,6 +8,7 @@ import useStyles from './styles';
 import Input from './Input';
 import Icon from './icon';
 import { signin, signup } from '../../actions/auth';
+import { fetchUsers } from '../../api/index';
 
 const initialForm = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '',};
 
@@ -45,6 +46,26 @@ const Auth = () => {
         const token = res?.tokenId;
 
         try {
+            const { data } = await fetchUsers();
+            console.log(data)
+            if (data.filter(user => user.email === result.email).length > 0) {
+                console.log('signin')
+                dispatch(signin({
+                    email: result.email,
+                    password: result.googleId
+                }, history))
+            } else {
+                console.log('signup')
+                dispatch(signup({
+                    firstName: result.givenName,
+                    lastName: result.familyName,
+                    email: result.email,
+                    password: result.googleId,
+                    confirmPassword: result.googleId
+                }, history))
+            }
+            //if result.email is in users then dispatch(signin({firstName: result.givenName, etc.}, history))
+            //else dispatch(signup(, history))
             dispatch({ type: 'AUTH', data: { result, token }});
 
             history.push('/');
