@@ -11,7 +11,8 @@ const Reflect = () => {
     const guessInfo = useSelector((state) => state.auth.guessInfo);
 
     return (
-        <Paper className={classes.paper}>
+        <>
+        <Paper className={classes.paper} elevation={0}>
             <Container maxWidth="md">
                 {guessInfo ? (
                     <>
@@ -21,11 +22,13 @@ const Reflect = () => {
                             <Typography variant='h6'>Good try. You were off by {guessInfo.difference} days.</Typography>
                         )}
                         <Typography variant='subtitle2'>Streak: +1, Points: +{guessInfo.points}</Typography>
-                        <Entry entry={guessEntry} noEdit={true}/>
+                        
                     </>
-                ) : <Typography variant='h6'>Come back tomorrow for another entry.</Typography>}
+                ) : <Typography variant='h6' align="center">Come back tomorrow for another entry.</Typography>}
             </Container>
         </Paper>
+        {guessEntry ? (<Entry entry={guessEntry} noEdit={true}/>) : null}
+        </>
     )
 }
 

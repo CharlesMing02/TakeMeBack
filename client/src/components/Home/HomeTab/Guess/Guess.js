@@ -52,29 +52,33 @@ const Guess = ({ setTab }, props) => {
                 <>
                     <Typography variant="h4">Retrieving a forgotten memory...</Typography>
                     <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grow in={transition} style={{ transformOrigin: '0 0 0'}} {...{timeout: 1000}}><Typography variant="h6">Some highlights from this day were:</Typography></Grow>
-                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '0.5s'}} {...{timeout: 2000}}>
-                                <Typography variant="body1">{guessEntry?.highlights[0]}</Typography>
-                            </Grow>
-                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1s'}} {...{timeout: 3000}}>
-                                <Typography variant="body1">{guessEntry?.highlights[1]}</Typography>
-                            </Grow>
-                            <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1.5s'}} {...{timeout: 4000}}>
-                                <Typography {...props} variant="body1">{guessEntry?.highlights[2]}</Typography>
-                            </Grow>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    autoOk
-                                    variant="inline"
-                                    inputVariant="outlined"
-                                    label="When is this from?"
-                                    format="MM/dd/yyyy"
-                                    value={date}
-                                    InputAdornmentProps={{ position: "start" }}
-                                    onChange={date => changeDate(date)}
-                                />
-                            </MuiPickersUtilsProvider>
+                        <Grid container spacing={4}>
+                            <Grid item xs={12} sm={6} container direction="column" justify="flex-start" alignItems="center">
+                                <Grow in={transition} style={{ transformOrigin: '0 0 0'}} {...{timeout: 1000}}><Typography variant="h6">Some highlights from this day were:</Typography></Grow>
+                                <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '0.5s'}} {...{timeout: 2000}}>
+                                    <Typography variant="body1">{guessEntry?.highlights[0]}</Typography>
+                                </Grow>
+                                <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1s'}} {...{timeout: 3000}}>
+                                    <Typography variant="body1">{guessEntry?.highlights[1]}</Typography>
+                                </Grow>
+                                <Grow in={transition} style={{ transformOrigin: '0 0 0', transitionDelay: '1.5s'}} {...{timeout: 4000}}>
+                                    <Typography {...props} variant="body1">{guessEntry?.highlights[2]}</Typography>
+                                </Grow>
+                            </Grid>
+                            <Grid item xs={12} sm={6} container justify="center">
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        autoOk
+                                        variant="inline"
+                                        inputVariant="outlined"
+                                        label="When is this from?"
+                                        format="MM/dd/yyyy"
+                                        value={date}
+                                        InputAdornmentProps={{ position: "start" }}
+                                        onChange={date => changeDate(date)}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </Grid>
                             {(!user.result.guessed && guessEntry !== null) ? (
                                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Guess!</Button>
                             ) : (

@@ -24,7 +24,7 @@ app.use('/entries', entryRoutes);
 app.use('/user', userRoutes);
 app.use('/media', mediaRoutes);
 
-cron.schedule('5,30 * * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
     const res = await User.updateMany({guessed: false}, {streak: 0});
     console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
 

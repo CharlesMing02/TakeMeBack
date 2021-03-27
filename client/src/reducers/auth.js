@@ -19,7 +19,7 @@ const authReducer = (state = { authData: JSON.parse(localStorage.getItem('profil
             return { ...state, authData: missingPoints };
         case LOGOUT:
             localStorage.clear();
-            return { ...state, authData: null, dailyEntry: null };
+            return { ...state, authData: null, dailyEntry: null, guessEntry: null };
         case UPDATE_USER:
             const old = state.authData;
             old.result = { ...action?.payload };

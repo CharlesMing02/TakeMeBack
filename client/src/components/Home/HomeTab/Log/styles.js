@@ -39,7 +39,7 @@ export default makeStyles((theme) => ({
     },
   },
   buttonSubmit: {
-    marginBottom: 10,
+    marginBottom: 0,
   },
   input: {
     display: 'none',
