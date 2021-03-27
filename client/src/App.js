@@ -9,52 +9,17 @@ import Home from './components/Home/Home';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 
 import useStyles from './styles';
+import { bluePeach, skyBlue } from './themes';
 
-const theme = createMuiTheme({
-    palette: {
-        type: "light",
-        primary: {
-            main: '#4169E1'
-        },
-        secondary: {
-            main: '#ffcba4'
-        },
-    },
-    typography: {
-        fontFamily: "'Source Sans Pro', sans-serif",
-        h1: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-        h2: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-        h3: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-        h4: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-        h5: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-        h6: {
-            fontFamily: "'Playfair Display', sans-serif",
-            fontWeight: 400
-        },
-    },
-})
+const defaultTheme = createMuiTheme(bluePeach);
+const skyBlueTheme = createMuiTheme(skyBlue);
 
 const App = () => {
     const classes = useStyles();
 
     return (
         <BrowserRouter>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={defaultTheme}>
                 <Container className={classes.root}>
                     <Navbar/>
                     <Switch>

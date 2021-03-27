@@ -4,6 +4,7 @@ export default makeStyles((theme) => ({
   rootMobile: {
     backgroundColor: theme.palette.background.paper,
     width: '100%',
+    flexGrow: 1,
   },
   root: {
     flexGrow: 1,

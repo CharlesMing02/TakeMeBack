@@ -11,10 +11,10 @@ const Leaderboard = () => {
     //const [sort, setSort] = useState('points') //sort by points or streak
     const dispatch = useDispatch();
     const byStreak = users.sort((a, b) => {
-        return a.streak - b.streak
+        return b.streak - a.streak
     })
-    const byPoints = users.sort((a, b) => {
-        return a.points - b.points
+    const byPoints = [...users].sort((a, b) => {
+        return b.points - a.points
     })
 
     useEffect(() => {

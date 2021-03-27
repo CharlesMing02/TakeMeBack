@@ -63,25 +63,25 @@ const Entries = ({ setCurrentId }) => {
     return (
         !entries.length ? <CircularProgress/> : ( //loading spinner while no entries loaded in
             <div className={mobile ? classes.rootMobile : classes.root}>
-            <Tabs
-                orientation={mobile ? "horizontal" : "vertical"}
-                textColor="primary"
-                indicatorColor="primary"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs example"
-                className={mobile ? null : classes.tabs}
-            >
+                <Tabs
+                    orientation={mobile ? "horizontal" : "vertical"}
+                    textColor="primary"
+                    indicatorColor="primary"
+                    variant="scrollable"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    className={mobile ? null : classes.tabs}
+                >
+                    {entries.map((entry) => (
+                        <Tab label={moment(entry.createdAt).format("MMM Do YY")} key={entry._id} {...a11yProps(entries.indexOf(entry))} />
+                    ))}
+                </Tabs>
                 {entries.map((entry) => (
-                    <Tab label={moment(entry.createdAt).format("MMM Do YY")} key={entry._id} {...a11yProps(entries.indexOf(entry))} />
+                    <TabPanel value={value} index={entries.indexOf(entry)} key={entry._id}>
+                        <Entry entry={entry} setCurrentId={setCurrentId}/>
+                    </TabPanel>
                 ))}
-            </Tabs>
-            {entries.map((entry) => (
-                <TabPanel value={value} index={entries.indexOf(entry)} key={entry._id}>
-                    <Entry entry={entry} setCurrentId={setCurrentId}/>
-                </TabPanel>
-            ))}
             </div>
         )
     );

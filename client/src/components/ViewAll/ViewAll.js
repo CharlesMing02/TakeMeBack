@@ -20,16 +20,16 @@ const ViewAll = () => {
         <Grow in>
             <Container className={classes.main} maxWidth={false}>
                 {currentId ? (
-                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-                        <Grid item xs={12} sm={8}>
+                    <Grid container justify="space-between" alignItems="stretch" spacing={0}  className={classes.inner}>
+                        <Grid item xs={12} sm={8} className={classes.inner}>
                             <Entries setCurrentId={setCurrentId}/>
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={4} className={classes.inner}>
                             <Form currentId={currentId} setCurrentId={setCurrentId}/>
                         </Grid>
                     </Grid>
                 ) : (
-                    <Grid container justify="space-between" alignItems="stretch" spacing={3}>
+                    <Grid container justify="space-between" alignItems="stretch" spacing={0}  className={classes.inner}>
                         <Grid item xs={12}>
                             <Entries setCurrentId={setCurrentId}/>
                         </Grid>
