@@ -49,7 +49,7 @@ export const skyBlue =
                 main: '#FCF6F5'  //'#E69A8D'
             },
             text: {
-                primary: 'rgb(95, 119, 158)',
+                primary: '#5F779E',
             },
             background: {
                 paper: '#FCF6F5'

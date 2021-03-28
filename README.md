@@ -1,8 +1,8 @@
-<a href="https://github.com/CharlesMing02/TakeMeBack"> 
+<a href="https://takemeback.netlify.app/"> 
     <!-- Replace with live link -->
     <h1 align="center">TakeMeBack</h1>
 </a>
-<p align="center">A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia! <br> Access the site at [link] </p>
+<p align="center">A fun and rewarding web app that turns journaling into a game - earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia! <br> Access the site at https://takemeback.netlify.app/ </p>
 
 ## About The Project
 I've always wanted to make journaling a habit due to its many benefits -- appreciating each day, reliving forgotten memories, and improving mental clarity -- but struggled to find the discipline to do so. This app overcomes this obstacle by gamifying the process! 
@@ -30,6 +30,8 @@ This project is in early development!
 - Add location or weather metadata
 - Mood log with analytics
 - More user settings (song volume, change username/password)
+- Refactor how local storage is handled (currently in redux reducer)
+- Soundcloud widget doesn't seem to support mobile
 
 
 

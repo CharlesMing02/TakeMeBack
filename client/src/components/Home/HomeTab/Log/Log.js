@@ -3,11 +3,10 @@ import { TextField, Button, Typography, Paper, Grid, Card, CardContent, CardActi
 import DescriptionIcon from '@material-ui/icons/Description';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
-import YouTubeIcon from '@material-ui/icons/YouTube';
+//import YouTubeIcon from '@material-ui/icons/YouTube';
 import { SpeedDial, SpeedDialIcon, SpeedDialAction } from '@material-ui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import ReactPlayer from 'react-player/soundcloud'
 
 import useStyles from './styles';
 import { createEntry, updateEntry } from '../../../../actions/entries';
@@ -131,7 +130,7 @@ const Log = ({ setTab }) => {
                                         <Typography variant='h6'>A song I'm vibing to</Typography>
                                         {entryData?.song ? (
                                             <Grid item xs={12}>
-                                                <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5} playing={user?.result.settings.autoplay}/>
+                                                <iframe title="soundcloudPlayer" width="100%" height="200px" scrolling="no" frameborder="no" src={`https://w.soundcloud.com/player/?url=${entryData.song.uri}&amp;show_artwork=true&amp;visual=true&amp;color=${user?.result?.settings?.theme==='default' ? 'ffcba4' : '5F779E'}&amp;auto_play=${user?.result?.settings?.autoplay}&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;buying=false&amp;liking=false`}></iframe>
                                             </Grid>) : (
                                             <Grid item xs={12} container justify="center">
                                                 <SongSelector/>

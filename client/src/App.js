@@ -18,7 +18,8 @@ const skyBlueTheme = createMuiTheme(skyBlue);
 
 const App = () => {
     const classes = useStyles();
-    const user = useSelector((state) => state.auth.authData); //user.settings.theme 
+    const user = useSelector((state) => state.auth.authData); 
+    console.log("If you're poking around here you might find the Github interesting: https://github.com/CharlesMing02/TakeMeBack");
 
     return (
         <BrowserRouter>
