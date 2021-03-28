@@ -98,7 +98,7 @@ const Auth = () => {
                             {isSignup ? 'Sign Up' : 'Sign In'}
                         </Button>
                         <GoogleLogin
-                            clientId='304299194324-ktrfu2mdfkqjpov4rprmfkqu1laaoqdn.apps.googleusercontent.com' //after deploying, add url here: https://console.cloud.google.com/apis/credentials?project=takemeback-308402&supportedpurview=project
+                            clientId='304299194324-ktrfu2mdfkqjpov4rprmfkqu1laaoqdn.apps.googleusercontent.com' //after deploying, add url here: https://console.cloud.google.com/apis/credentials?project=takemeback-308402&supportedpurview=project . no need to hide because urls are restricted
                             render={(renderProps) => (
                                 <Button className={classes.googleButton} color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon/>} variant="contained">
                                     Sign in with Google

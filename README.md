@@ -21,7 +21,7 @@ Users can also view all past entries at any time. Doing so before guessing break
 - Express, Node.js, axios, and node-cron
 - MongoDB and mongoose
 
-The app also uses the Soundcloud API, bcrypt, jwt-decode, and moment.js.
+The app also uses the Soundcloud API, bcrypt, jwt-decode, and moment.js. The backend is deployed on Heroku.
 
 ## Status:
 This project is in early development!
@@ -29,6 +29,7 @@ This project is in early development!
 ### Ideas for future features:
 - Add location or weather metadata
 - Mood log with analytics
+- More user settings (song volume, change username/password)
 
 
 
