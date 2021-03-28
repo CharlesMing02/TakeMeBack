@@ -24,6 +24,10 @@ app.use('/entries', entryRoutes);
 app.use('/user', userRoutes);
 app.use('/media', mediaRoutes);
 
+app.get('/', (req, res) => {
+    res.send('TakeMeBack API');
+})
+
 cron.schedule('0 0 * * *', async () => {
     const res = await User.updateMany({guessed: false}, {streak: 0});
     console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
