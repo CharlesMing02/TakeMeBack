@@ -14,7 +14,7 @@ const entrySchema = mongoose.Schema({
     },
     selectedFile: String,
     song: Object
-    // add extra attributes like song, media, etc. later
+    
 });
 
 const EntryMessage = mongoose.model('EntryMessage', entrySchema)

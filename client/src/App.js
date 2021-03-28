@@ -1,12 +1,14 @@
 import React from 'react';
 import { Container, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Navbar from './components/Navbar/Navbar';
 import ViewAll from './components/ViewAll/ViewAll';
 import Auth from './components/Auth/Auth';
 import Home from './components/Home/Home';
 import Leaderboard from './components/Leaderboard/Leaderboard';
+import Settings from './components/Settings/Settings';
 
 import useStyles from './styles';
 import { bluePeach, skyBlue } from './themes';
@@ -16,10 +18,11 @@ const skyBlueTheme = createMuiTheme(skyBlue);
 
 const App = () => {
     const classes = useStyles();
+    const user = useSelector((state) => state.auth.authData); //user.settings.theme 
 
     return (
         <BrowserRouter>
-            <ThemeProvider theme={defaultTheme}>
+            <ThemeProvider theme={(user?.result?.settings?.theme==='skyBlue') ? skyBlueTheme : defaultTheme }> 
                 <Container className={classes.root}>
                     <Navbar/>
                     <Switch>
@@ -27,6 +30,7 @@ const App = () => {
                         <Route path="/auth" exact component={Auth}/>
                         <Route path="/" exact component={Home}/>
                         <Route path="/leaderboard" exact component={Leaderboard}/>
+                        <Route path="/settings" exact component={Settings}/>
                     </Switch>
                 </Container>
             </ThemeProvider>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, CardContent, CardMedia, Container, Grid, Typography, Paper } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import ReactPlayer from 'react-player/soundcloud'
 
@@ -8,6 +9,7 @@ import useStyles from './styles';
 
 const Entry = ({ entry, setCurrentId, noEdit }) => {
     const classes = useStyles();
+    const user = useSelector((state) => state.auth.authData);
 
     return (
         <Container maxWidth="md">
@@ -37,7 +39,7 @@ const Entry = ({ entry, setCurrentId, noEdit }) => {
                                     <Grid container  justify="center" alignItems="center">
                                         <Typography variant='h6'>A song I'm vibing to</Typography>
                                         <Grid item xs={12}>
-                                            <ReactPlayer url={entry.song.permalink_url} width='100%' height='200px' volume={0.5} playing={true}/>
+                                            <ReactPlayer url={entry.song.permalink_url} width='100%' height='200px' volume={0.5} playing={user?.result.settings.autoplay}/>
                                         </Grid>
                                     </Grid>
                                 </CardContent>

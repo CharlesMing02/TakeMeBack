@@ -25,7 +25,7 @@ const Leaderboard = () => {
         !users.length ? <CircularProgress/> : (
             <Grow in>
                 <Container className={classes.main} maxWidth={false}>
-                    <h1>Leaderboard</h1>
+                    <h1>Leaderboard (need to style)</h1>
                     <h2>By Streak</h2>
                     {byStreak.map((user) => (
                         <p>{user.name}: {user.streak}</p>

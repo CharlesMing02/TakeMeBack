@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import useStyles from './styles';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography, IconButton, Drawer, MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshUser, updateUser } from '../../actions/auth';
 import decode from 'jwt-decode';
 
 import AvatarMenu from '../AvatarMenu/AvatarMenu';
+import { refreshUser, updateUser } from '../../actions/auth';
+import useStyles from './styles';
 
 const Navbar = () => {
     console.log('render')
@@ -77,7 +77,7 @@ const Navbar = () => {
                         <Link to='/leaderboard' className={classes.sidePanel}>
                             <MenuItem>Leaderboard</MenuItem>
                         </Link>
-                        <Link to='/' color="inherit" className={classes.sidePanel}>
+                        <Link to='/settings' color="inherit" className={classes.sidePanel}>
                             <MenuItem>Settings</MenuItem>
                         </Link>
                     </Drawer>
@@ -106,7 +106,7 @@ const Navbar = () => {
                                 <div className={classes.userOptions}>
                                     <Typography component={Link} variant="subtitle1" className={classes.title}  onClick={confirmViewAll}>View All</Typography>
                                     <Typography component={Link} to='/leaderboard' variant="subtitle1" className={classes.title}>Leaderboard</Typography>
-                                    <Typography component={Link} to='/' variant="subtitle1" className={classes.title}>Settings</Typography>
+                                    <Typography component={Link} to='/settings' variant="subtitle1" className={classes.title}>Settings</Typography>
                                     <AvatarMenu user={user} logout={logout}/>
                                 </div>
                                 

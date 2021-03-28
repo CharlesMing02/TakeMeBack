@@ -131,7 +131,7 @@ const Log = ({ setTab }) => {
                                         <Typography variant='h6'>A song I'm vibing to</Typography>
                                         {entryData?.song ? (
                                             <Grid item xs={12}>
-                                                <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5}/>
+                                                <ReactPlayer url={entryData.song.permalink_url} width='100%' height='200px' volume={0.5} playing={user?.result.settings.autoplay}/>
                                             </Grid>) : (
                                             <Grid item xs={12} container justify="center">
                                                 <SongSelector/>

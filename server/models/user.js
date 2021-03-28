@@ -8,7 +8,11 @@ const userSchema = mongoose.Schema({
     streak: { type: Number, default: 0 },
     points: { type: Number, default: 0 },
     logged: { type: Boolean, default: false },
-    guessed: { type: Boolean, default: false }
+    guessed: { type: Boolean, default: false },
+    settings: {
+        autoplay: { type: Boolean, default: true },
+        theme: { type: String, default: 'default' }
+    }
 });
 
 const User = mongoose.model('User', userSchema)
