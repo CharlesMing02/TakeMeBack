@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Grow, Grid,  } from '@material-ui/core';
+import { Container, Grow } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import useStyles from './styles';
 import HomeTab from './HomeTab/HomeTab';
+import Landing from './Landing/Landing';
 
 const Home = () => {
     const classes = useStyles();
@@ -14,9 +15,8 @@ const Home = () => {
             <Container className={classes.main} maxWidth={false}>
                         {userInfo.authData ? (
                             <HomeTab/>
-                            
                         ) : (
-                            <h1>Landing</h1>
+                            <Landing/>
                         )}
             </Container>
         </Grow>
