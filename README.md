@@ -26,12 +26,18 @@ The app also uses the Soundcloud API, bcrypt, jwt-decode, and moment.js. The bac
 ## Status:
 This project is in early development!
 
+### Things I'm working on:
+- Tutorial
+- Landing page with demo account
+- Clearer tooltips
+- Improve view all page
+
 ### Ideas for future features:
 - Add location or weather metadata
 - Mood log with analytics
 - More user settings (song volume, change username/password)
 - Refactor how local storage is handled (currently in redux reducer)
-- Soundcloud widget doesn't seem to support mobile
+- Soundcloud api doesn't seem to support many songs on mobile
 
 
 
