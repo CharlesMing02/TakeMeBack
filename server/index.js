@@ -28,13 +28,14 @@ app.get('/', (req, res) => {
     res.send('TakeMeBack API');
 })
 
-cron.schedule('0 0 * * *', async () => {
-    const res = await User.updateMany({guessed: false}, {streak: 0});
-    console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
+// doesn't work on heroku because free dyno goes to sleep
+// cron.schedule('0 0 * * *', async () => { 
+//     const res = await User.updateMany({guessed: false}, {streak: 0});
+//     console.log(`Streaks broken: ${res.n}. Modified: ${res.nModified}`);
 
-    const res2 = await User.updateMany({}, { guessed: false, logged: false });
-    console.log(`Reset: ${res2.n}`);
-});
+//     const res2 = await User.updateMany({}, { guessed: false, logged: false });
+//     console.log(`Reset: ${res2.n}`);
+// });
 
 
 

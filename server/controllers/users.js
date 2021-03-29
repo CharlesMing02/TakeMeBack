@@ -84,3 +84,16 @@ export const getUsers = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
+export const refreshUsers = async (req, res) => {
+    try {
+        const res1 = await User.updateMany({guessed: false}, {streak: 0});
+        console.log(`Streaks broken: ${res1.n}. Modified: ${res1.nModified}`);
+        
+        const res2 = await User.updateMany({}, { guessed: false, logged: false });
+        console.log(`Reset: ${res2.n}`);
+        res.json(res1)
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
