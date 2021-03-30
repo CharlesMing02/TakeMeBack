@@ -21,7 +21,7 @@ export const signup = (formData, history) => async (dispatch) => {
         //if data.name === 'Demo Account', call api.createEntry({entryinfo}) with a few starter entries?
         //should be doable, make sure to pass in Date() object with custom params
         //demo entries should have one universal highlight for guessing, highlight all features (media, etc.)
-        //ideas: start of pandemic w/ death bed song, 
+        //ideas: start of pandemic w/ death bed song, one with castle on the hill (2017), 
         history.push('/')
     } catch (error) {
         alert(error.response.data.message);

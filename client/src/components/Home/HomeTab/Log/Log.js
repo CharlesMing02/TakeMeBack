@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Paper, Grid, Card, CardContent, CardActions } from '@material-ui/core';
+import { TextField, Button, Typography, Paper, Grid, Card, CardContent, CardActions, Snackbar, IconButton, Tooltip } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import DescriptionIcon from '@material-ui/icons/Description';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
@@ -13,6 +14,17 @@ import { createEntry, updateEntry } from '../../../../actions/entries';
 import { updateUser, getGuessEntry } from '../../../../actions/auth';
 import SongSelector from './SongSelector/SongSelector';
 
+const advice = <div style={{whiteSpace: 'pre-line'}}>
+    {`Some ideas:
+    \u2022 Events, achievements, something you did
+    \u2022 Something you’re grateful for
+    \u2022 Describe how you’re feeling
+    \u2022 News (current events, sports, pop culture, etc.)
+    \u2022 Interesting/funny thoughts
+    \u2022 A question you wish you knew the answer to
+    `}
+</div>
+
 const Log = ({ setTab }) => {
     const entryData = useSelector((state) => state.auth.dailyEntry);
     const [error, setError] = useState(false);
@@ -21,6 +33,7 @@ const Log = ({ setTab }) => {
     const user = useSelector((state) => state.auth.authData);
     const [dialOpen, setDialOpen] = useState(false);
     const lastEntry = useSelector((state) => state.entries[state.entries.length - 1]); //need to get id for updating
+    const [snackOpen, setSnackOpen] = useState(false);
 
     const handleChange = (e) => {
         dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...entryData, [e.target.name]: e.target.value}});
@@ -37,8 +50,8 @@ const Log = ({ setTab }) => {
             setError(false);
             dispatch({ type: 'UPDATE_DAILY_ENTRY', data: entryData});
             if(user.result.logged) {
-                console.log(lastEntry)
                 dispatch(updateEntry(lastEntry._id, rest)); 
+                setSnackOpen(true);
             } else {
                 dispatch(createEntry(rest));
                 dispatch(updateUser(user.result._id, {logged: true}));
@@ -91,6 +104,14 @@ const Log = ({ setTab }) => {
         //...(entryData?.youtube != null ? [] : [{ icon: <YouTubeIcon/>, name: 'Add YouTube video', handleClick: handleClick('youtube')}]),
     ];
 
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSnackOpen(false);
+    };
+
     return (
         <Paper className={classes.paper} elevation={3}>
             <Typography variant="h4" gutterBottom>{moment(new Date()).format("MMMM Do, YYYY")}</Typography>
@@ -120,6 +141,11 @@ const Log = ({ setTab }) => {
                                     /></Grid>
                                 </Grid>
                             </CardContent>
+                            <CardActions>
+                                <Tooltip title={advice} interactive enterTouchDelay={0}>
+                                    <Button size="small" color="primary" className={classes.cardButton}>?</Button>
+                                </Tooltip>
+                            </CardActions>
                         </Card>
                     </Grid>
                     {(entryData?.song || entryData?.song==='') ? (
@@ -204,6 +230,21 @@ const Log = ({ setTab }) => {
                     )}
                 </Grid>
             </form>
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                open={snackOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackClose}
+                message="Saved"
+                action={
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackClose}>
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                }
+            />
         </Paper>
     )
 }

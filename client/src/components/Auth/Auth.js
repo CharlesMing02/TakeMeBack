@@ -64,8 +64,6 @@ const Auth = () => {
                     confirmPassword: result.googleId
                 }, history))
             }
-            //if result.email is in users then dispatch(signin({firstName: result.givenName, etc.}, history))
-            //else dispatch(signup(, history))
             dispatch({ type: 'AUTH', data: { result, token }});
 
             history.push('/');
