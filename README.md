@@ -21,7 +21,7 @@ Users can also view all past entries at any time. Doing so before guessing break
 - Express, Node.js, axios, and node-cron
 - MongoDB and mongoose
 
-The app also uses the Soundcloud API, bcrypt, jwt-decode, and moment.js. The backend is deployed on Heroku.
+The app also uses the Soundcloud API, bcrypt, jwt-decode, react-google-login and moment.js. The backend is deployed on Heroku.
 
 ## Status:
 This project is in early development!
@@ -29,8 +29,7 @@ This project is in early development!
 ### Things I'm working on:
 - Tutorial
 - Landing page with demo account
-- Clearer tooltips
-- Improve view all page
+- Improve view all page: add pagination by date range to backend and change frontend to view by month
 
 ### Ideas for future features:
 - Add location or weather metadata
