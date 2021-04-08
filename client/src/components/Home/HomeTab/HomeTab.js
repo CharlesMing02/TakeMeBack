@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Container } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 import useStyles from './styles';
 import Log from './Log/Log';
@@ -21,7 +22,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-            <Container maxWidth="md" >
+            <Container maxWidth="md" id={`panel-container-${index}`}>
                 <>{children}</> 
             </Container>
             )}
@@ -44,6 +45,8 @@ function a11yProps(index) {
 
 const HomeTab = () => {
     const user = useSelector((state) => state.auth.authData); //gets from global redux state
+    const tutorial = useSelector((state) => state.tutorial);
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [mobile, setMobile] = useState(false);
     const [value, setValue] = React.useState(0);
@@ -64,6 +67,25 @@ const HomeTab = () => {
         setResponsiveness();
         window.addEventListener("resize", () => setResponsiveness());
     }, []);
+
+    useEffect(() => { //start tutorial if user streak is 0
+        if (user.result.streak === 0) {
+            dispatch({ type: "START" });
+        }
+    }, []);
+
+    const callback = data => { //for tutorial
+        const { action, index, type, status } = data;
+
+        if (action === ACTIONS.CLOSE || (status === STATUS.SKIPPED && tutorial.run) || status === STATUS.FINISHED) {
+            dispatch({ type: 'STOP' });
+        } else if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
+            dispatch({
+                type: "NEXT_OR_PREV",
+                payload: { stepIndex: index + (action === ACTIONS.PREV ? -1 : 1)}
+            });
+        }
+    }
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -95,6 +117,28 @@ const HomeTab = () => {
             <TabPanel value={value} index={2}>
                 <Reflect/>
             </TabPanel>
+            <Joyride 
+                spotlightClicks
+                spotlightPadding={0} 
+                {...tutorial}
+                callback={callback}
+                showSkipButton={true} 
+                disableOverlayClose
+                disableCloseOnEsc
+                hideCloseButton={true}
+                locale={{
+                    last: "End tutorial",
+                    skip: "Skip tutorial"
+                }}
+                styles={{
+                    options: {
+                        primaryColor: '#4169E1'
+                    },
+                    buttonClose: {
+                        display: 'none'
+                    }
+                }}
+            />
         </div>
     );
 }

@@ -12,7 +12,7 @@ const Reflect = () => {
 
     return (
         <>
-        <Paper className={classes.paper} elevation={0}>
+        <Paper className={classes.paper} elevation={0} id="reflectPaper">
             <Container maxWidth="md">
                 {guessInfo ? (
                     <>

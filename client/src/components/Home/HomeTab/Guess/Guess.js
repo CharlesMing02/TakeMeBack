@@ -32,22 +32,25 @@ const Guess = ({ setTab }, props) => {
 
         dispatch(updateUser(user.result._id, { guessed: true, points: user.result.points + points, streak: user.result.streak + 1 }));
         dispatch({ type: 'UPDATE_GUESS_INFO', data: {difference: difference, points: points} });
-        setTab(2)
+        setTab(2) 
+        dispatch({ //for tutorial
+            type: "NEXT_OR_PREV",
+            payload: { stepIndex: 8}
+        })
     }
-    setTimeout(() => {
-        changeTransition(true);
-    }, 2000)
-
 
     useEffect(() => {
         if (user.result.logged && guessEntry===null) { //meaning they logged at a different time, logged out, and logged back in
             dispatch(getGuessEntry(user.result._id));
             console.log('got new guess entry')
         }
+        setTimeout(() => {
+            changeTransition(true);
+        }, 2000)
     }, [])
 
     return (
-        <Paper className={classes.paper} elevation={3}>
+        <Paper className={classes.paper} elevation={3} id="guessPaper">
             {user.result.logged ? (
                 <>
                     <Typography variant="h4">Retrieving a forgotten memory...</Typography>

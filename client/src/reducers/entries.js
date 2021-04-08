@@ -8,6 +8,7 @@ export default (state = [], action) => {
         case FETCH_ALL:
             return action.payload;
         case CREATE:
+            localStorage.setItem('withID', JSON.stringify(action.payload))
             return [...state, action.payload];
         default:
             return state;

@@ -32,7 +32,7 @@ const Log = ({ setTab }) => {
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
     const [dialOpen, setDialOpen] = useState(false);
-    const lastEntry = useSelector((state) => state.entries[state.entries.length - 1]); //need to get id for updating
+    const lastEntry = useSelector((state) => (state.entries[state.entries.length - 1] || JSON.parse(localStorage.getItem('withID')))); //need to get id for updating
     const [snackOpen, setSnackOpen] = useState(false);
 
     const handleChange = (e) => {
@@ -45,6 +45,13 @@ const Log = ({ setTab }) => {
         const { h1, h2, h3, ...rest } = parseHighlights;
         if (rest.highlights.includes(undefined) || rest.highlights.includes('')) {
             setError(true);
+            if (user.result.streak === 0) {
+                dispatch({
+                    type: "NEXT_OR_PREV",
+                    payload: { stepIndex: 3, run: true, loading: false, key: new Date() }
+                })
+                dispatch({ type: 'UPDATE_DAILY_ENTRY', data: {...entryData, song: null}});
+            }
             return
         } else {
             setError(false);
@@ -57,6 +64,10 @@ const Log = ({ setTab }) => {
                 dispatch(updateUser(user.result._id, {logged: true}));
                 dispatch(getGuessEntry(user.result._id)); //note: this also increments the askedCount of that entry
                 setTab(1)
+                dispatch({
+                    type: "NEXT_OR_PREV",
+                    payload: { stepIndex: 7}
+                })
             }
         }
 
@@ -86,13 +97,15 @@ const Log = ({ setTab }) => {
     const handleClick = (key) => { //for click of speed dial
         const returned = () => {
             let newData = { ...entryData };
-            if (key==='song') {
-                newData[key] = '';
-            } else {
-                newData[key] = '';
-            }
+            newData[key] = '';
             dispatch({ type: 'UPDATE_DAILY_ENTRY', data: newData });
             handleClose();
+            if (key==='song') { //for tutorial
+                dispatch({
+                    type: "NEXT_OR_PREV",
+                    payload: { stepIndex: 5}
+                })
+            }
         }
         return returned;
     }
@@ -113,13 +126,13 @@ const Log = ({ setTab }) => {
     };
 
     return (
-        <Paper className={classes.paper} elevation={3}>
+        <Paper className={classes.paper} elevation={3} id="paper">
             <Typography variant="h4" gutterBottom>{moment(new Date()).format("MMMM Do, YYYY")}</Typography>
             
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Grid container spacing={4}>
                     <Grid item xs>
-                        <Card variant="outlined" className={classes.entryCard}>
+                        <Card variant="outlined" className={classes.entryCard} id="highlights">
                             <CardContent>
                                 <Grid container  justify="center" alignItems="center" spacing={0} >
                                     <Typography variant='h6'>3 highlights of my day were:</Typography>
@@ -150,7 +163,7 @@ const Log = ({ setTab }) => {
                     </Grid>
                     {(entryData?.song || entryData?.song==='') ? (
                         <Grid item xs>
-                            <Card variant="outlined" className={classes.entryCard}>
+                            <Card variant="outlined" className={classes.entryCard} id="song">
                                 <CardContent>
                                     <Grid container  justify="center" alignItems="center">
                                         <Typography variant='h6'>A song I'm vibing to</Typography>
