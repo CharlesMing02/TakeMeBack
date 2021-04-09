@@ -70,7 +70,7 @@ const HomeTab = () => {
 
     useEffect(() => { //start tutorial if user streak is 0
         if (user.result.streak === 0) {
-            dispatch({ type: "START" });
+            dispatch({ type: "RESTART" });
         }
     }, []);
 

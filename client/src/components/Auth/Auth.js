@@ -64,9 +64,9 @@ const Auth = () => {
                     confirmPassword: result.googleId
                 }, history))
             }
-            dispatch({ type: 'AUTH', data: { result, token }});
+            // dispatch({ type: 'AUTH', data: { result, token }});
 
-            history.push('/');
+            // history.push('/');
         } catch (error) {
             console.log(error)
         }

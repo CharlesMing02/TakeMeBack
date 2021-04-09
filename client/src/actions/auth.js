@@ -1,6 +1,8 @@
 import { AUTH, UPDATE_USER, GET_GUESS_ENTRY, FETCH_USERS } from '../constants/actionTypes';
 import * as api from '../api';
 
+import { demoEntries } from './demoEntries';
+
 export const signin = (formData, history) => async (dispatch) => {
     try {
         const { data } = await api.signIn(formData);
@@ -18,6 +20,18 @@ export const signup = (formData, history) => async (dispatch) => {
         const { data } = await api.signUp(formData);
 
         dispatch({ type: AUTH, data });
+
+        if (data.result.name === 'Demo Account') {
+            const id = data.result._id
+            try {
+                const { data } = await api.updateUser(id, {points: 500});
+                dispatch({ type: UPDATE_USER, payload: data});
+                demoEntries.forEach(async (entry) => await api.createEntry(entry))
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
         //if data.name === 'Demo Account', call api.createEntry({entryinfo}) with a few starter entries?
         //should be doable, make sure to pass in Date() object with custom params
         //demo entries should have one universal highlight for guessing, highlight all features (media, etc.)
