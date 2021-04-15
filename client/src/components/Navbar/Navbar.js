@@ -10,7 +10,6 @@ import { refreshUser, updateUser } from '../../actions/auth';
 import useStyles from './styles';
 
 const Navbar = () => {
-    console.log('render')
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
     const dispatch = useDispatch();
@@ -35,7 +34,6 @@ const Navbar = () => {
 
     useEffect(() => {
         const token = user?.token;
-        console.log('useffect')
         if(token) {
             const decodedToken = decode(token);
             if(decodedToken.exp * 1000 < new Date().getTime()) {
@@ -47,7 +45,6 @@ const Navbar = () => {
     },[location]);
 
     const confirmViewAll = () => {
-        console.log(user.result.guessed);
         if (user.result.guessed) {
             history.push('/view_all');
         } else {

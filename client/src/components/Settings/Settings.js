@@ -14,7 +14,6 @@ const Settings = () => {
     const history = useHistory();
 
     const toggleAutoplay = (e) => {
-        console.log({...user.settings, autoplay: e.target.checked});
         dispatch(updateUser(user._id, { settings: {...user.settings, autoplay: e.target.checked} }));
     }
 

@@ -9,7 +9,6 @@ import useStyles from './styles';
 const Entry = ({ entry, setCurrentId, noEdit }) => {
     const classes = useStyles();
     const user = useSelector((state) => state.auth.authData);
-    console.log(entry?.song?.permalink_url)
 
     return (
         <Container maxWidth="md">

@@ -47,15 +47,12 @@ const Auth = () => {
 
         try {
             const { data } = await fetchUsers();
-            console.log(data)
             if (data.filter(user => user.email === result.email).length > 0) {
-                console.log('signin')
                 dispatch(signin({
                     email: result.email,
                     password: result.googleId
                 }, history))
             } else {
-                console.log('signup')
                 dispatch(signup({
                     firstName: result.givenName,
                     lastName: result.familyName,

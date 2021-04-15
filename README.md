@@ -12,7 +12,9 @@ Users unlock daily guesses by briefly logging their day. The app then displays a
 ### Features: 
 I aimed to make the process as beginner-friendly and flexible as possible. At minimum, an entry consists of three highlights of the day (a proven journaling strategy). Users then have the option to add images, videos, songs, or longer descriptions. 
 
-[insert gif to demonstrate functionality]
+<div align="center">
+    <img src="https://media.giphy.com/media/cQQYKutpgRra7iBOjG/giphy.gif" alt="demo">
+</div>
 
 Users can also view all past entries at any time. Doing so before guessing breaks their streak, however -- otherwise earning max points becomes too easy.
 
@@ -27,7 +29,6 @@ The app also uses the Soundcloud API, bcrypt, jwt-decode, react-google-login and
 This project is in early development!
 
 ### Things I'm working on:
-- Tutorial
 - Landing page with demo account
 - Improve view all page: add pagination by date range to backend and change frontend to view by month
 
@@ -36,7 +37,7 @@ This project is in early development!
 - Mood log with analytics
 - More user settings (song volume, change username/password)
 - Refactor how local storage is handled (currently in redux reducer)
-- Soundcloud api doesn't seem to support many songs on mobile
+- Soundcloud api doesn't seem to support some songs on mobile
 
 
 

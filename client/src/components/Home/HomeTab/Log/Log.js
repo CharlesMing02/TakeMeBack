@@ -195,7 +195,6 @@ const Log = ({ setTab }) => {
                                         ) : <Grid container justify="center" alignItems="center">
                                                 <input accept="image/*" type="file" multiple={false} className={classes.input} id="contained-button-file"
                                                     onChange={(e) => {
-                                                        console.log('chang')
                                                         uploadImage(e);
                                                     }}
                                                 />

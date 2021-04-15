@@ -14,7 +14,6 @@ const SongSelector = () => {
 
     React.useEffect(() => {
         let active = true;
-        console.log('useeffect')
     
 
         if (inputValue === '') {
@@ -24,7 +23,6 @@ const SongSelector = () => {
     
         (async () => {
           const { data } = await fetchSong(inputValue);
-          console.log(data)
     
             if (active) {
                 let newOptions = [];
@@ -36,7 +34,6 @@ const SongSelector = () => {
                 if (data) {
                     newOptions = [...newOptions, ...data.collection]
                 }
-                console.log('newOptions', newOptions)
                 setOptions(newOptions);
             }
         })();
@@ -59,7 +56,6 @@ const SongSelector = () => {
             open={open}
             onOpen={() => {
                 setOpen(true);
-                console.log(options)
             }}
             onClose={() => {
                 setOpen(false);
@@ -69,7 +65,6 @@ const SongSelector = () => {
             filterOptions={(x) => x}
             getOptionLabel={(song) => `${song.title} - ${song?.user?.username}`}
             onChange={(event, newValue) => {
-                console.log(event, newValue)
                 setOptions(newValue ? [newValue, ...options] : options);
                 dispatch({ type: 'UPDATE_DAILY_ENTRY', data: { ...dailyEntry, song: newValue}});
             }}

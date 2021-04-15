@@ -17,7 +17,6 @@ const Form = ({ currentId, setCurrentId }) => {
 
     useEffect(() => {
         if(entry) setEntryData(entry);
-        console.log(entryData)
     }, [entry])
 
     const handleSubmit = (e) => {

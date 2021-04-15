@@ -25,10 +25,8 @@ const Guess = ({ setTab }, props) => {
         const date2 = Date.UTC(correct.getFullYear(), correct.getMonth(), correct.getDate());
         const ms = Math.abs(date1-date2);
         const difference = Math.floor(ms/1000/60/60/24); //above lines calculate difference in days
-        console.log('difference', difference)
 
         const points = Math.floor((1+Math.log(user.result.streak+1)) * Math.max(100-difference, 0));
-        console.log('points', points)
 
         dispatch(updateUser(user.result._id, { guessed: true, points: user.result.points + points, streak: user.result.streak + 1 }));
         dispatch({ type: 'UPDATE_GUESS_INFO', data: {difference: difference, points: points} });
@@ -42,7 +40,6 @@ const Guess = ({ setTab }, props) => {
     useEffect(() => {
         if (user.result.logged && guessEntry===null) { //meaning they logged at a different time, logged out, and logged back in
             dispatch(getGuessEntry(user.result._id));
-            console.log('got new guess entry')
         }
         setTimeout(() => {
             changeTransition(true);
