@@ -25,12 +25,13 @@ const Landing = () => {
     }
 
     return (
+        <>
         <Grow in>
             <Container className={classes.main} maxWidth={false}>
-                <Grid container spacing={6} direction="row" justify="center" alignItems="stretch">
+                <Grid container spacing={6} direction="row" justify="center" alignItems="center">
                     <Grid item xs={10} sm={4}>
-                        <Typography variant="h1" className={classes.title}>Journal For Fun.</Typography>
-                        <Typography variant="subtitle1" className={classes.subtitle}>I'm going to make the landing page last. For now just sign in or create an account.</Typography>
+                        <Typography variant="h2" className={classes.title}>Journal For Fun.</Typography>
+                        <Typography variant="body1" className={classes.subtitle}>Earn points and streaks by guessing the dates of previous entries, then read through them for a wave of nostalgia!</Typography>
                         <Button component={Link} to="/auth" variant="contained" color="primary">Get Started</Button>
                         <Button variant="outlined" color="primary" className={classes.demoButton} onClick={handleDemo}>Demo Account</Button>
                     </Grid>
@@ -41,6 +42,7 @@ const Landing = () => {
                 
             </Container>
         </Grow>
+        </>
     )
 }
 
