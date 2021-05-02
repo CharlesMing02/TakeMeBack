@@ -26,10 +26,8 @@ Users can also view all past entries at any time. Doing so before guessing break
 The app also uses the Soundcloud API, bcrypt, jwt-decode, react-google-login and moment.js. The backend is deployed on Heroku.
 
 ## Status:
-This project is in early development!
 
 ### Things I'm working on:
-- Landing page with demo account
 - Improve view all page: add pagination by date range to backend and change frontend to view by month
 
 ### Ideas for future features:
